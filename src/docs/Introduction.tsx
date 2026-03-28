@@ -1,11 +1,13 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PackageManagerTabs } from './PackageManagerTabs'
+import { useTOC } from './DocsTOCContext'
 
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-semibold tracking-tight mt-10 mb-3">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
 }
 function P({ children }: { children: React.ReactNode }) {
   return <p className="text-zinc-600 leading-relaxed mb-4">{children}</p>
@@ -22,6 +24,17 @@ function Pre({ children }: { children: string }) {
 }
 
 export function Introduction() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'why-formflow', label: 'Why FormFlow?' },
+      { id: 'core-concepts', label: 'Core concepts' },
+      { id: 'what-formflow-is-not', label: 'What FormFlow is not' },
+      { id: 'quick-look', label: 'Quick look' },
+    ])
+    return () => setItems([])
+  }, [setItems])
+
   return (
     <article>
       <div className="mb-8">
@@ -33,7 +46,7 @@ export function Introduction() {
         </p>
       </div>
 
-      <H2>Why FormFlow?</H2>
+      <H2 id="why-formflow">Why FormFlow?</H2>
       <P>
         Multi-step forms appear simple until you need to conditionally show or skip steps
         based on earlier answers, let users save their progress and return later, or
@@ -46,7 +59,7 @@ export function Introduction() {
         library or plain HTML.
       </P>
 
-      <H2>Core concepts</H2>
+      <H2 id="core-concepts">Core concepts</H2>
       <P>
         FormFlow is built around three ideas:
       </P>
@@ -77,7 +90,7 @@ export function Introduction() {
         </div>
       </div>
 
-      <H2>What FormFlow is not</H2>
+      <H2 id="what-formflow-is-not">What FormFlow is not</H2>
       <P>
         FormFlow is not a form renderer. It does not generate inputs, labels, or layouts.
         It gives you state and a set of actions — what you render with them is up to you.
@@ -89,7 +102,7 @@ export function Introduction() {
         granularity for multi-step flows.
       </P>
 
-      <H2>Quick look</H2>
+      <H2 id="quick-look">Quick look</H2>
       <Pre>{`import { useFormFlow, localStorageAdapter } from 'formflow'
 import { z } from 'zod'
 

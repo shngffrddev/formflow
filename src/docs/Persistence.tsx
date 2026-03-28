@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+import { useTOC } from './DocsTOCContext'
+
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-semibold tracking-tight mt-10 mb-3">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
@@ -49,6 +52,17 @@ const ADAPTERS = [
 ]
 
 export function Persistence() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'how-it-works', label: 'How it works' },
+      { id: 'built-in-adapters', label: 'Built-in adapters' },
+      { id: 'disabling-persistence', label: 'Disabling persistence' },
+      { id: 'custom-adapters', label: 'Custom adapters' },
+      { id: 'resetting-state', label: 'Resetting saved state' },
+    ])
+    return () => setItems([])
+  }, [setItems])
   return (
     <article>
       <div className="mb-8">
@@ -60,7 +74,7 @@ export function Persistence() {
         </p>
       </div>
 
-      <H2>How it works</H2>
+      <H2 id="how-it-works">How it works</H2>
       <P>
         On every call to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>,
         FormFlow calls <Code>adapter.save(formId, values)</Code> with the latest accumulated
@@ -68,7 +82,7 @@ export function Persistence() {
         the initial values. When the form completes, it calls <Code>adapter.clear(formId)</Code>.
       </P>
 
-      <H2>Built-in adapters</H2>
+      <H2 id="built-in-adapters">Built-in adapters</H2>
       <div className="border border-zinc-100 rounded-xl overflow-hidden my-6">
         <table className="w-full text-sm">
           <thead className="bg-zinc-50 border-b border-zinc-100">
@@ -138,7 +152,7 @@ const saved = raw ? JSON.parse(atob(raw)) : null`}</Pre>
         to manage persistence yourself via <Code>onComplete</Code>.
       </P>
 
-      <H2>Disabling persistence</H2>
+      <H2 id="disabling-persistence">Disabling persistence</H2>
       <P>
         Pass <Code>persistence: null</Code> (or omit it) to disable persistence without
         importing <Code>nullAdapter</Code>:
@@ -149,7 +163,7 @@ const saved = raw ? JSON.parse(atob(raw)) : null`}</Pre>
   persistence: null,  // no persistence
 })`}</Pre>
 
-      <H2>Custom adapters</H2>
+      <H2 id="custom-adapters">Custom adapters</H2>
       <P>
         Any object that implements the <Code>PersistenceAdapter</Code> interface works.
         This lets you save form state to a database, Redis, or any other storage layer.
@@ -183,7 +197,7 @@ const apiAdapter: PersistenceAdapter = {
         so async adapters work without any extra configuration.
       </P>
 
-      <H2>Resetting saved state</H2>
+      <H2 id="resetting-state">Resetting saved state</H2>
       <P>
         Call <Code>actions.reset()</Code> to clear persisted values and return to step one.
         This calls <Code>adapter.clear(formId)</Code> internally.

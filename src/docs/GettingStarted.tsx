@@ -1,11 +1,13 @@
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { PackageManagerTabs } from './PackageManagerTabs'
+import { useTOC } from './DocsTOCContext'
 
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-semibold tracking-tight mt-10 mb-3">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
@@ -35,6 +37,17 @@ function Step({ n, label }: { n: number; label: string }) {
 }
 
 export function GettingStarted() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'installation', label: 'Installation' },
+      { id: 'your-first-form', label: 'Your first form' },
+      { id: 'full-example', label: 'Full example' },
+      { id: 'next-steps', label: 'Next steps' },
+    ])
+    return () => setItems([])
+  }, [setItems])
+
   return (
     <article>
       <div className="mb-8">
@@ -46,7 +59,7 @@ export function GettingStarted() {
         </p>
       </div>
 
-      <H2>Installation</H2>
+      <H2 id="installation">Installation</H2>
       <P>
         The quickest way is to use the CLI, which detects your package manager and
         installs everything automatically:
@@ -57,7 +70,7 @@ export function GettingStarted() {
       </P>
       <PackageManagerTabs packages="@shngffrddev/formflow zod" />
 
-      <H2>Your first form</H2>
+      <H2 id="your-first-form">Your first form</H2>
       <P>
         Building a form with FormFlow involves four steps. Let's walk through each one.
       </P>
@@ -175,7 +188,7 @@ return (
   return <p>Thanks! We'll be in touch.</p>
 }`}</Pre>
 
-      <H2>Full example</H2>
+      <H2 id="full-example">Full example</H2>
       <P>
         Putting it all together — a minimal but complete two-step form:
       </P>
@@ -251,7 +264,7 @@ export function OnboardingForm() {
   )
 }`}</Pre>
 
-      <H2>Next steps</H2>
+      <H2 id="next-steps">Next steps</H2>
       <div className="grid grid-cols-2 gap-3 mt-4">
         {[
           { to: '/docs/conditional-branching', label: 'Conditional Branching', desc: 'Show or skip steps based on earlier answers' },

@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+import { useTOC } from './DocsTOCContext'
+
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-semibold tracking-tight mt-10 mb-3">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
@@ -29,6 +32,19 @@ function Note({ children }: { children: React.ReactNode }) {
 }
 
 export function Validation() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'attaching-a-schema', label: 'Attaching a schema' },
+      { id: 'accessing-errors', label: 'Accessing errors' },
+      { id: 'skipping-validation', label: 'Skipping validation' },
+      { id: 'cross-field-validation', label: 'Cross-field validation' },
+      { id: 'async-validation', label: 'Async validation' },
+      { id: 'server-side-reuse', label: 'Server-side reuse' },
+    ])
+    return () => setItems([])
+  }, [setItems])
+
   return (
     <article>
       <div className="mb-8">
@@ -40,7 +56,7 @@ export function Validation() {
         </p>
       </div>
 
-      <H2>Attaching a schema to a step</H2>
+      <H2 id="attaching-a-schema">Attaching a schema to a step</H2>
       <P>
         Set the <Code>schema</Code> property to a Zod object schema. FormFlow calls
         <Code>schema.safeParseAsync(state.values)</Code> when <Code>actions.next()</Code>
@@ -66,7 +82,7 @@ const steps = [
         or <Code>.default()</Code> for fields that haven't been filled yet.
       </Note>
 
-      <H2>Accessing validation errors</H2>
+      <H2 id="accessing-errors">Accessing validation errors</H2>
       <P>
         After a failed navigation attempt, errors are available at
         <Code>state.steps[stepId].errors</Code> — a plain object mapping field paths to
@@ -84,7 +100,7 @@ return (
   </div>
 )`}</Pre>
 
-      <H2>Skipping validation</H2>
+      <H2 id="skipping-validation">Skipping validation</H2>
       <P>
         Set <Code>schema: null</Code> to disable validation for a step entirely.
         This is common for review or confirmation steps that don't collect new data.
@@ -95,7 +111,7 @@ return (
   schema: null,
 }`}</Pre>
 
-      <H2>Cross-field validation with .refine()</H2>
+      <H2 id="cross-field-validation">Cross-field validation with .refine()</H2>
       <P>
         Zod's <Code>.refine()</Code> and <Code>.superRefine()</Code> work as expected.
         FormFlow unwraps <Code>ZodEffects</Code> automatically, so cross-field errors
@@ -112,7 +128,7 @@ return (
   }
 )`}</Pre>
 
-      <H2>Async validation</H2>
+      <H2 id="async-validation">Async validation</H2>
       <P>
         FormFlow uses <Code>safeParseAsync</Code> internally, so async Zod refinements
         work without any extra configuration:
@@ -129,7 +145,7 @@ return (
     ),
 })`}</Pre>
 
-      <H2>Manual validation</H2>
+      <H2 id="manual-validation">Manual validation</H2>
       <P>
         You can trigger validation without advancing the form using
         <Code>actions.validate()</Code>. It returns a promise that resolves to an
@@ -146,7 +162,7 @@ if (Object.keys(errors).length === 0) {
   // step is valid
 }`}</Pre>
 
-      <H2>Reusing schemas server-side</H2>
+      <H2 id="server-side-reuse">Reusing schemas server-side</H2>
       <P>
         Because schemas are plain Zod objects, you can export them from your step
         definitions and import them in your API route handlers. No duplication required.

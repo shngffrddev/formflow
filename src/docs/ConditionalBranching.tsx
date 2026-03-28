@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+import { useTOC } from './DocsTOCContext'
+
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-xl font-semibold tracking-tight mt-10 mb-3">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
@@ -35,6 +38,18 @@ const OPS = [
 ]
 
 export function ConditionalBranching() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'how-it-works', label: 'How it works' },
+      { id: 'simple-conditions', label: 'Simple conditions' },
+      { id: 'compound-conditions', label: 'Compound conditions' },
+      { id: 'step-ordering', label: 'Step ordering' },
+      { id: 'accessing-active-steps', label: 'Accessing active steps' },
+    ])
+    return () => setItems([])
+  }, [setItems])
+
   return (
     <article>
       <div className="mb-8">
@@ -46,7 +61,7 @@ export function ConditionalBranching() {
         </p>
       </div>
 
-      <H2>How it works</H2>
+      <H2 id="how-it-works">How it works</H2>
       <P>
         Every step can have an optional <Code>condition</Code> property. After each call
         to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>, FormFlow
@@ -60,7 +75,7 @@ export function ConditionalBranching() {
         true again later.
       </P>
 
-      <H2>Simple conditions</H2>
+      <H2 id="simple-conditions">Simple conditions</H2>
       <P>
         A simple condition targets a single field and applies one of ten operators.
       </P>
@@ -90,7 +105,7 @@ export function ConditionalBranching() {
         </table>
       </div>
 
-      <H2>Compound conditions</H2>
+      <H2 id="compound-conditions">Compound conditions</H2>
       <P>
         Conditions can be composed with <Code>and</Code>, <Code>or</Code>, and
         <Code>not</Code> to express any logic you need.
@@ -136,7 +151,7 @@ condition: { field: 'workStyle', op: 'neq', value: 'remote-only' }`}</Pre>
   ]
 }`}</Pre>
 
-      <H2>Step ordering</H2>
+      <H2 id="step-ordering">Step ordering</H2>
       <P>
         By default, steps are shown in the order they are defined in the array.
         You can override this with the <Code>order</Code> property — a numeric weight
@@ -159,7 +174,7 @@ condition: { field: 'workStyle', op: 'neq', value: 'remote-only' }`}</Pre>
   },
 ]`}</Pre>
 
-      <H2>Accessing active steps</H2>
+      <H2 id="accessing-active-steps">Accessing active steps</H2>
       <P>
         The hook exposes <Code>state.activeStepIds</Code> — the ordered array of step IDs
         that are currently visible. Use this to build progress indicators or navigation.

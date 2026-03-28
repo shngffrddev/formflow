@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+import { useTOC } from './DocsTOCContext'
+
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
 }
-function H2({ children }: { children: React.ReactNode }) {
-  return <h2 className="text-2xl font-semibold tracking-tight mt-12 mb-4 pt-8 border-t border-zinc-100">{children}</h2>
+function H2({ children, id }: { children: React.ReactNode; id?: string }) {
+  return <h2 id={id} className="text-2xl font-semibold tracking-tight mt-12 mb-4 pt-8 border-t border-zinc-100 scroll-mt-20">{children}</h2>
 }
 function H3({ children }: { children: React.ReactNode }) {
   return <h3 className="text-base font-semibold mt-6 mb-2 font-mono text-zinc-800">{children}</h3>
@@ -67,6 +70,20 @@ function TD({ children, mono }: { children: React.ReactNode; mono?: boolean }) {
 }
 
 export function APIReference() {
+  const { setItems } = useTOC()
+  useEffect(() => {
+    setItems([
+      { id: 'use-form-flow', label: 'useFormFlow()' },
+      { id: 'step-definition', label: 'StepDefinition' },
+      { id: 'form-flow-state', label: 'FormFlowState' },
+      { id: 'step-state', label: 'StepState' },
+      { id: 'form-flow-actions', label: 'FormFlowActions' },
+      { id: 'condition', label: 'Condition' },
+      { id: 'persistence-adapter', label: 'PersistenceAdapter' },
+      { id: 'all-exports', label: 'All exports' },
+    ])
+    return () => setItems([])
+  }, [setItems])
   return (
     <article>
       <div className="mb-8">
@@ -78,7 +95,7 @@ export function APIReference() {
       </div>
 
       {/* useFormFlow */}
-      <H2>useFormFlow(options)</H2>
+      <H2 id="use-form-flow">useFormFlow(options)</H2>
       <P>The main hook. Returns <Code>state</Code>, <Code>actions</Code>, and <Code>currentStep</Code>.</P>
       <Pre>{`import { useFormFlow } from 'formflow'
 
@@ -105,7 +122,7 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
       </div>
 
       {/* StepDefinition */}
-      <H2>StepDefinition</H2>
+      <H2 id="step-definition">StepDefinition</H2>
       <P>A plain object describing a single step in the form.</P>
       <Pre>{`interface StepDefinition {
   id: StepId
@@ -144,7 +161,7 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
       </div>
 
       {/* FormFlowState */}
-      <H2>FormFlowState</H2>
+      <H2 id="form-flow-state">FormFlowState</H2>
       <P>The complete form state returned as <Code>state</Code> from the hook.</P>
       <Pre>{`interface FormFlowState {
   values: FormValues
@@ -187,7 +204,7 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
       </div>
 
       {/* StepState */}
-      <H2>StepState</H2>
+      <H2 id="step-state">StepState</H2>
       <Pre>{`interface StepState {
   status: 'pending' | 'active' | 'complete' | 'skipped'
   errors: Record<string, string>
@@ -217,7 +234,7 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
       </div>
 
       {/* FormFlowActions */}
-      <H2>FormFlowActions</H2>
+      <H2 id="form-flow-actions">FormFlowActions</H2>
       <P>All mutation methods returned as <Code>actions</Code> from the hook.</P>
       <div className="border border-zinc-100 rounded-xl overflow-hidden my-4">
         <table className="w-full text-sm">
@@ -248,7 +265,7 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
       </div>
 
       {/* Condition */}
-      <H2>Condition</H2>
+      <H2 id="condition">Condition</H2>
       <P>Used in <Code>StepDefinition.condition</Code>. A union of simple and compound condition types.</P>
       <Pre>{`type Condition = SimpleCondition | CompoundCondition
 
@@ -265,7 +282,7 @@ interface CompoundCondition {
 }`}</Pre>
 
       {/* PersistenceAdapter */}
-      <H2>PersistenceAdapter</H2>
+      <H2 id="persistence-adapter">PersistenceAdapter</H2>
       <P>Interface for custom storage adapters.</P>
       <Pre>{`interface PersistenceAdapter {
   load(formId: string): FormValues | null | Promise<FormValues | null>
@@ -279,7 +296,7 @@ interface CompoundCondition {
 type FormValues = Record<string, FieldValue>`}</Pre>
 
       {/* Exports */}
-      <H2>All exports</H2>
+      <H2 id="all-exports">All exports</H2>
       <Pre>{`// Hook
 export { useFormFlow } from 'formflow'
 
