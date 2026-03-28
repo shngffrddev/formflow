@@ -7,6 +7,7 @@ node_modules/
 # Build outputs
 dist/
 lib/
+cli/
 
 # TypeScript
 *.tsbuildinfo
@@ -28,3 +29,5 @@ lib/
 # OS
 .DS_Store
 Thumbs.db
+
+.vercel

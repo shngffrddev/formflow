@@ -1,6 +1,6 @@
 {
   "name": "@shngffrddev/formflow",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Multi-step forms with conditional branching, Zod validation, and partial persistence.",
   "keywords": [
     "react",
@@ -23,22 +23,29 @@
       "require": "./lib/index.cjs"
     }
   },
+  "bin": {
+    "formflow": "cli/index.cjs"
+  },
   "files": [
-    "lib"
+    "lib",
+    "cli"
   ],
   "sideEffects": false,
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "build:lib": "vite build --config vite.lib.config.ts && tsc -p tsconfig.lib.json",
+    "build:cli": "npx esbuild src/cli/index.ts --bundle --platform=node --format=cjs --outfile=cli/index.cjs --banner:js=\"#!/usr/bin/env node\"",
+    "build:all": "npm run build:lib && npm run build:cli",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.cli.json --noEmit"
   },
   "peerDependencies": {
     "react": "^18.0.0",
     "zod": "^3.0.0"
   },
   "dependencies": {
+    "@shngffrddev/formflow": "^0.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.13.2",
