@@ -103,7 +103,7 @@ async function init() {
   ok(`${missing.join(', ')} installed`)
   br()
   log(`${DIM}Get started:${RESET}`)
-  log(`  ${DIM}https://formflow-theta.vercel.app/docs/getting-started${RESET}`)
+  log(`  ${DIM}https://formflow.shngffrd.com/docs/getting-started${RESET}`)
   br()
 }
 
