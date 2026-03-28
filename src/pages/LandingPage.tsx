@@ -1,4 +1,49 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+
+const PKG = '@shngffrddev/formflow zod'
+const MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const
+type Manager = typeof MANAGERS[number]
+const CMD: Record<Manager, string> = {
+  pnpm: `pnpm add ${PKG}`,
+  npm:  `npm install ${PKG}`,
+  yarn: `yarn add ${PKG}`,
+  bun:  `bun add ${PKG}`,
+}
+
+function InstallTabs() {
+  const [active, setActive] = useState<Manager>('pnpm')
+  const [copied, setCopied] = useState(false)
+  const copy = async () => {
+    await navigator.clipboard.writeText(CMD[active])
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <div className="rounded-xl overflow-hidden border border-zinc-200 font-mono text-sm max-w-lg">
+      <div className="flex items-center gap-1 bg-zinc-100 px-3 pt-2">
+        {MANAGERS.map((m) => (
+          <button
+            key={m}
+            onClick={() => setActive(m)}
+            className={`px-3 py-1.5 rounded-t text-xs font-medium transition-colors ${
+              active === m ? 'bg-white text-zinc-900' : 'text-zinc-500 hover:text-zinc-700'
+            }`}
+          >
+            {m}
+          </button>
+        ))}
+        <button onClick={copy} className="ml-auto text-zinc-400 hover:text-zinc-600 p-1 transition-colors" title="Copy">
+          {copied
+            ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polyline points="20 6 9 17 4 12" /></svg>
+            : <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="9" y="9" width="13" height="13" rx="2" /><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" /></svg>
+          }
+        </button>
+      </div>
+      <div className="bg-white px-5 py-3 text-zinc-800 text-sm">{CMD[active]}</div>
+    </div>
+  )
+}
 
 const CODE_QUICK_START = `import { useFormFlow, localStorageAdapter } from 'formflow'
 import { z } from 'zod'
@@ -115,11 +160,8 @@ export function LandingPage() {
 
       {/* Install strip */}
       <section className="border-y border-zinc-100 bg-zinc-50">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-4">
-          <span className="text-sm text-zinc-500 font-medium">Install</span>
-          <code className="text-sm font-mono text-zinc-800 bg-white border border-zinc-200 px-4 py-2 rounded-lg select-all">
-            npm install formflow zod
-          </code>
+        <div className="max-w-6xl mx-auto px-6 py-2">
+          <InstallTabs />
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { PackageManagerTabs } from './PackageManagerTabs'
 
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>

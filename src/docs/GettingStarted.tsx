@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { PackageManagerTabs } from './PackageManagerTabs'
 
 function H1({ children }: { children: React.ReactNode }) {
   return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
@@ -50,7 +51,7 @@ export function GettingStarted() {
         FormFlow requires React 18+ and Zod 3+. Both are peer dependencies — install
         them alongside FormFlow:
       </P>
-      <Pre>{`npm install formflow zod`}</Pre>
+      <PackageManagerTabs packages="@shngffrddev/formflow zod" />
 
       <H2>Your first form</H2>
       <P>
