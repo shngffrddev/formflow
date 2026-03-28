@@ -1,5 +1,5 @@
 {
-  "name": "formflow",
+  "name": "@shngffrddev/formflow",
   "version": "0.1.0",
   "description": "Multi-step forms with conditional branching, Zod validation, and partial persistence.",
   "keywords": [

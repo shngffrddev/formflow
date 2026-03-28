@@ -3,7 +3,7 @@
 Multi-step forms with conditional branching, Zod validation, and partial persistence.
 
 ```
-npm install formflow zod
+npm install @shngffrddev/formflow zod
 ```
 
 ## Why
@@ -23,7 +23,7 @@ Multi-step forms are deceptively tricky. The parts that matter — conditional s
 ## Quick start
 
 ```tsx
-import { useFormFlow, localStorageAdapter } from 'formflow'
+import { useFormFlow, localStorageAdapter } from '@shngffrddev/formflow'
 import { z } from 'zod'
 
 const steps = [
@@ -173,13 +173,13 @@ import {
   sessionStorageAdapter,  // sessionStorage — cleared on tab close
   urlParamsAdapter,       // ?state= URL param — shareable links
   nullAdapter,            // no-op — disables persistence
-} from 'formflow'
+} from '@shngffrddev/formflow'
 ```
 
 ### Custom adapter
 
 ```ts
-import type { PersistenceAdapter } from 'formflow'
+import type { PersistenceAdapter } from '@shngffrddev/formflow'
 
 const apiAdapter: PersistenceAdapter = {
   async load(formId) {
