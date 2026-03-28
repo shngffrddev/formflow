@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+package-lock.json
 
 # Claude Code
 .claude/
@@ -29,5 +30,7 @@ cli/
 # OS
 .DS_Store
 Thumbs.db
+
+.vercel
 
 .vercel
