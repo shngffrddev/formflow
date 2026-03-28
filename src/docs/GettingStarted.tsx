@@ -48,8 +48,12 @@ export function GettingStarted() {
 
       <H2>Installation</H2>
       <P>
-        FormFlow requires React 18+ and Zod 3+. Both are peer dependencies — install
-        them alongside FormFlow:
+        The quickest way is to use the CLI, which detects your package manager and
+        installs everything automatically:
+      </P>
+      <PackageManagerTabs packages="dlx @shngffrddev/formflow init" mode="dlx" />
+      <P>
+        Or install manually — FormFlow requires React 18+ and Zod 3+ as peer dependencies:
       </P>
       <PackageManagerTabs packages="@shngffrddev/formflow zod" />
 

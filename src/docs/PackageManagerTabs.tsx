@@ -3,23 +3,33 @@ import { useState } from 'react'
 const MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const
 type Manager = typeof MANAGERS[number]
 
-const COMMANDS: Record<Manager, (pkg: string) => string> = {
+const ADD_COMMANDS: Record<Manager, (pkg: string) => string> = {
   pnpm: (pkg) => `pnpm add ${pkg}`,
   npm:  (pkg) => `npm install ${pkg}`,
   yarn: (pkg) => `yarn add ${pkg}`,
   bun:  (pkg) => `bun add ${pkg}`,
 }
 
-interface Props {
-  packages: string
+// dlx mode: run-without-installing (pnpm dlx, npx, yarn dlx, bunx)
+const DLX_COMMANDS: Record<Manager, (pkg: string) => string> = {
+  pnpm: (pkg) => `pnpm ${pkg}`,
+  npm:  (pkg) => `npx ${pkg}`,
+  yarn: (pkg) => `yarn ${pkg}`,
+  bun:  (pkg) => `bunx ${pkg}`,
 }
 
-export function PackageManagerTabs({ packages }: Props) {
+interface Props {
+  packages: string
+  mode?: 'add' | 'dlx'
+}
+
+export function PackageManagerTabs({ packages, mode = 'add' }: Props) {
   const [active, setActive] = useState<Manager>('pnpm')
+  const commands = mode === 'dlx' ? DLX_COMMANDS : ADD_COMMANDS
+  const cmd = commands[active](packages)
 
   return (
     <div className="rounded-xl overflow-hidden border border-zinc-800 my-4 font-mono text-sm">
-      {/* Tab bar */}
       <div className="flex items-center gap-1 bg-zinc-900 px-3 pt-2">
         {MANAGERS.map((m) => (
           <button
@@ -34,14 +44,9 @@ export function PackageManagerTabs({ packages }: Props) {
             {m}
           </button>
         ))}
-        {/* Copy button */}
-        <CopyButton text={COMMANDS[active](packages)} />
+        <CopyButton text={cmd} />
       </div>
-
-      {/* Command */}
-      <div className="bg-zinc-800 px-5 py-4 text-zinc-200">
-        {COMMANDS[active](packages)}
-      </div>
+      <div className="bg-zinc-800 px-5 py-4 text-zinc-200">{cmd}</div>
     </div>
   )
 }

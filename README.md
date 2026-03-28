@@ -2,8 +2,25 @@
 
 Multi-step forms with conditional branching, Zod validation, and partial persistence.
 
+### Install via CLI
+
+```bash
+pnpm dlx @shngffrddev/formflow init
 ```
+
+```bash
+npx @shngffrddev/formflow init
+```
+
+The CLI detects your package manager and installs all required dependencies automatically.
+
+### Manual install
+
+```bash
+pnpm add @shngffrddev/formflow zod
 npm install @shngffrddev/formflow zod
+yarn add @shngffrddev/formflow zod
+bun add @shngffrddev/formflow zod
 ```
 
 ## Why
