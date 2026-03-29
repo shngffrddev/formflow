@@ -71,7 +71,7 @@ export interface StepState {
   errors: Record<string, string>
 }
 
-export interface FormFlowState {
+export interface TrekState {
   /** All accumulated field values across all steps */
   values: FormValues
   /** Per-step status and errors, keyed by StepId */
@@ -92,7 +92,7 @@ export interface FormFlowState {
 
 // ─── Hook API ─────────────────────────────────────────────────────────────────
 
-export interface FormFlowActions {
+export interface TrekActions {
   /** Validate current step then advance if valid. Returns true on success. */
   next: () => Promise<boolean>
   /** Go back without validation */
@@ -107,9 +107,9 @@ export interface FormFlowActions {
   validate: () => Promise<Record<string, string>>
 }
 
-export interface UseFormFlowReturn {
-  state: FormFlowState
-  actions: FormFlowActions
+export interface UseTrekReturn {
+  state: TrekState
+  actions: TrekActions
   /** The resolved StepDefinition for the current step */
   currentStep: StepDefinition
 }
@@ -124,7 +124,7 @@ export interface PersistenceAdapter {
 
 // ─── Hook Options ─────────────────────────────────────────────────────────────
 
-export interface UseFormFlowOptions {
+export interface UseTrekOptions {
   formId: string
   steps: StepDefinition[]
   persistence?: PersistenceAdapter | null

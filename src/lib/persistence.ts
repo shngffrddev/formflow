@@ -5,7 +5,7 @@ import type { FormValues, PersistenceAdapter } from './types'
 export const localStorageAdapter: PersistenceAdapter = {
   load(formId) {
     try {
-      const raw = localStorage.getItem(`formflow:${formId}`)
+      const raw = localStorage.getItem(`formtrek:${formId}`)
       return raw ? (JSON.parse(raw) as FormValues) : null
     } catch {
       return null
@@ -13,13 +13,13 @@ export const localStorageAdapter: PersistenceAdapter = {
   },
   save(formId, values) {
     try {
-      localStorage.setItem(`formflow:${formId}`, JSON.stringify(values))
+      localStorage.setItem(`formtrek:${formId}`, JSON.stringify(values))
     } catch {
       // Quota exceeded or private browsing — fail silently
     }
   },
   clear(formId) {
-    localStorage.removeItem(`formflow:${formId}`)
+    localStorage.removeItem(`formtrek:${formId}`)
   },
 }
 
@@ -28,7 +28,7 @@ export const localStorageAdapter: PersistenceAdapter = {
 export const sessionStorageAdapter: PersistenceAdapter = {
   load(formId) {
     try {
-      const raw = sessionStorage.getItem(`formflow:${formId}`)
+      const raw = sessionStorage.getItem(`formtrek:${formId}`)
       return raw ? (JSON.parse(raw) as FormValues) : null
     } catch {
       return null
@@ -36,11 +36,11 @@ export const sessionStorageAdapter: PersistenceAdapter = {
   },
   save(formId, values) {
     try {
-      sessionStorage.setItem(`formflow:${formId}`, JSON.stringify(values))
+      sessionStorage.setItem(`formtrek:${formId}`, JSON.stringify(values))
     } catch {}
   },
   clear(formId) {
-    sessionStorage.removeItem(`formflow:${formId}`)
+    sessionStorage.removeItem(`formtrek:${formId}`)
   },
 }
 

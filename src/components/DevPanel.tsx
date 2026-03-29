@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { evaluateCondition } from '@lib/engine'
-import type { FormFlowState, StepDefinition } from '@lib/types'
+import type { TrekState, StepDefinition } from '@lib/types'
 
 interface DevPanelProps {
-  state: FormFlowState
+  state: TrekState
   stepDefs: StepDefinition[]
 }
 
@@ -19,7 +19,7 @@ export function DevPanel({ state, stepDefs }: DevPanelProps) {
         <div className="bg-slate-900 text-slate-100 rounded-xl shadow-2xl border border-slate-700 w-96 max-h-[70vh] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-3 border-b border-slate-700 shrink-0">
-            <span className="text-slate-400 font-semibold tracking-wide">FormFlow DevPanel</span>
+            <span className="text-slate-400 font-semibold tracking-wide">FormTrek DevPanel</span>
             <button
               onClick={() => setOpen(false)}
               className="text-slate-500 hover:text-white text-base leading-none"

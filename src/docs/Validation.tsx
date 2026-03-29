@@ -58,7 +58,7 @@ export function Validation() {
 
       <H2 id="attaching-a-schema">Attaching a schema to a step</H2>
       <P>
-        Set the <Code>schema</Code> property to a Zod object schema. FormFlow calls
+        Set the <Code>schema</Code> property to a Zod object schema. FormTrek calls
         <Code>schema.safeParseAsync(state.values)</Code> when <Code>actions.next()</Code>
         is called and navigation is blocked if any errors are returned.
       </P>
@@ -76,7 +76,7 @@ const steps = [
 ]`}</Pre>
 
       <Note>
-        <strong>Note:</strong> FormFlow validates the entire <Code>state.values</Code> object
+        <strong>Note:</strong> FormTrek validates the entire <Code>state.values</Code> object
         against the step's schema. Schema fields that don't exist in <Code>values</Code>
         will fail required checks — make sure your schemas use <Code>.optional()</Code>
         or <Code>.default()</Code> for fields that haven't been filled yet.
@@ -88,7 +88,7 @@ const steps = [
         <Code>state.steps[stepId].errors</Code> — a plain object mapping field paths to
         error messages.
       </P>
-      <Pre>{`const { state, currentStep } = useFormFlow({ ... })
+      <Pre>{`const { state, currentStep } = useTrek({ ... })
 const errors = state.steps[currentStep.id]?.errors ?? {}
 
 return (
@@ -114,7 +114,7 @@ return (
       <H2 id="cross-field-validation">Cross-field validation with .refine()</H2>
       <P>
         Zod's <Code>.refine()</Code> and <Code>.superRefine()</Code> work as expected.
-        FormFlow unwraps <Code>ZodEffects</Code> automatically, so cross-field errors
+        FormTrek unwraps <Code>ZodEffects</Code> automatically, so cross-field errors
         are surfaced at the field level.
       </P>
       <Pre>{`const salarySchema = z.object({
@@ -130,7 +130,7 @@ return (
 
       <H2 id="async-validation">Async validation</H2>
       <P>
-        FormFlow uses <Code>safeParseAsync</Code> internally, so async Zod refinements
+        FormTrek uses <Code>safeParseAsync</Code> internally, so async Zod refinements
         work without any extra configuration:
       </P>
       <Pre>{`const usernameSchema = z.object({
@@ -177,7 +177,7 @@ export const contactSchema = z.object({
   name: z.string().min(1),
 })`}</Pre>
 
-      <H3>Client — FormFlow step</H3>
+      <H3>Client — FormTrek step</H3>
       <Pre>{`// src/steps.ts
 import { contactSchema } from './schemas/contact'
 

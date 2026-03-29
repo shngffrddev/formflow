@@ -1,4 +1,4 @@
-export { useFormFlow } from './useFormFlow'
+export { useTrek } from './useTrek'
 export { evaluateCondition, resolveActiveSteps, validateStep } from './engine'
 export {
   localStorageAdapter,
@@ -11,10 +11,10 @@ export type {
   StepId,
   StepStatus,
   StepState,
-  FormFlowState,
-  FormFlowActions,
-  UseFormFlowReturn,
-  UseFormFlowOptions,
+  TrekState,
+  TrekActions,
+  UseTrekReturn,
+  UseTrekOptions,
   Condition,
   SimpleCondition,
   CompoundCondition,

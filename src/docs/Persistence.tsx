@@ -27,13 +27,13 @@ function Pre({ children }: { children: string }) {
 const ADAPTERS = [
   {
     name: 'localStorageAdapter',
-    key: 'formflow:<formId>',
+    key: 'formtrek:<formId>',
     survives: 'Page reload, browser close',
     useWhen: 'Default choice for most forms',
   },
   {
     name: 'sessionStorageAdapter',
-    key: 'formflow:<formId>',
+    key: 'formtrek:<formId>',
     survives: 'Page reload only',
     useWhen: 'Sensitive data you don\'t want to outlast the session',
   },
@@ -77,7 +77,7 @@ export function Persistence() {
       <H2 id="how-it-works">How it works</H2>
       <P>
         On every call to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>,
-        FormFlow calls <Code>adapter.save(formId, values)</Code> with the latest accumulated
+        FormTrek calls <Code>adapter.save(formId, values)</Code> with the latest accumulated
         values. On mount, it calls <Code>adapter.load(formId)</Code> and uses the result as
         the initial values. When the form completes, it calls <Code>adapter.clear(formId)</Code>.
       </P>
@@ -109,10 +109,10 @@ export function Persistence() {
   sessionStorageAdapter,
   urlParamsAdapter,
   nullAdapter,
-} from 'formflow'
+} from 'formtrek'
 
-// Pass to useFormFlow:
-useFormFlow({
+// Pass to useTrek:
+useTrek({
   formId: 'signup',
   steps,
   persistence: localStorageAdapter, // ← swap adapters here
@@ -121,7 +121,7 @@ useFormFlow({
       <H3>localStorageAdapter</H3>
       <P>
         Saves to <Code>window.localStorage</Code> under the key{' '}
-        <Code>formflow:&#123;formId&#125;</Code>. Survives page reloads and browser close.
+        <Code>formtrek:&#123;formId&#125;</Code>. Survives page reloads and browser close.
         The default choice for most forms.
       </P>
 
@@ -157,7 +157,7 @@ const saved = raw ? JSON.parse(atob(raw)) : null`}</Pre>
         Pass <Code>persistence: null</Code> (or omit it) to disable persistence without
         importing <Code>nullAdapter</Code>:
       </P>
-      <Pre>{`useFormFlow({
+      <Pre>{`useTrek({
   formId: 'checkout',
   steps,
   persistence: null,  // no persistence
@@ -168,7 +168,7 @@ const saved = raw ? JSON.parse(atob(raw)) : null`}</Pre>
         Any object that implements the <Code>PersistenceAdapter</Code> interface works.
         This lets you save form state to a database, Redis, or any other storage layer.
       </P>
-      <Pre>{`import type { PersistenceAdapter } from 'formflow'
+      <Pre>{`import type { PersistenceAdapter } from 'formtrek'
 
 // Example: save to your own API
 const apiAdapter: PersistenceAdapter = {
@@ -193,7 +193,7 @@ const apiAdapter: PersistenceAdapter = {
 }`}</Pre>
 
       <P>
-        FormFlow calls <Code>load</Code> and <Code>save</Code> with <Code>await</Code>,
+        FormTrek calls <Code>load</Code> and <Code>save</Code> with <Code>await</Code>,
         so async adapters work without any extra configuration.
       </P>
 

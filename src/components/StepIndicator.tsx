@@ -1,7 +1,7 @@
-import type { FormFlowState, StepDefinition, StepId } from '@lib/types'
+import type { TrekState, StepDefinition, StepId } from '@lib/types'
 
 interface StepIndicatorProps {
-  state: FormFlowState
+  state: TrekState
   stepDefs: StepDefinition[]
   onGoTo: (id: StepId) => void
 }
@@ -30,7 +30,7 @@ export function StepIndicator({ state, stepDefs, onGoTo }: StepIndicatorProps) {
                 className={`w-full flex items-center gap-3 px-2.5 py-2 rounded-xl text-left transition-all
                   ${isCurrent ? 'bg-brand-50 text-brand-700' : ''}
                   ${canClick ? 'cursor-pointer hover:bg-slate-50' : 'cursor-default'}
-                  ${!isCurrent && !isComplete ? 'opacity-50' : ''}`}
+                  ${!isCurrent && !isComplete ? 'opacity-60' : ''}`}
               >
                 {/* Badge */}
                 <span className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold transition-colors

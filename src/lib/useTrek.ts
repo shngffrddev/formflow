@@ -2,12 +2,12 @@ import { useCallback, useEffect, useMemo, useReducer } from 'react'
 import { resolveActiveSteps, validateStep } from './engine'
 import { localStorageAdapter } from './persistence'
 import type {
-  FormFlowActions,
-  FormFlowState,
+  TrekActions,
+  TrekState,
   FormValues,
   StepId,
-  UseFormFlowOptions,
-  UseFormFlowReturn,
+  UseTrekOptions,
+  UseTrekReturn,
 } from './types'
 
 // ─── Reducer ──────────────────────────────────────────────────────────────────
@@ -59,7 +59,7 @@ function reducer(state: InternalState, action: Action): InternalState {
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
-export function useFormFlow(options: UseFormFlowOptions): UseFormFlowReturn {
+export function useTrek(options: UseTrekOptions): UseTrekReturn {
   const {
     formId,
     steps: stepDefs,
@@ -105,11 +105,11 @@ export function useFormFlow(options: UseFormFlowOptions): UseFormFlowReturn {
 
   const currentStepDef = stepDefs.find(s => s.id === currentStepId)
   if (!currentStepDef) {
-    throw new Error(`[FormFlow] No step definition found for id "${currentStepId}"`)
+    throw new Error(`[FormTrek] No step definition found for id "${currentStepId}"`)
   }
 
-  // Build the public FormFlowState
-  const state: FormFlowState = useMemo(() => {
+  // Build the public TrekState
+  const state: TrekState = useMemo(() => {
     const steps = Object.fromEntries(
       stepDefs.map(s => {
         const isActive = s.id === currentStepId
@@ -197,7 +197,7 @@ export function useFormFlow(options: UseFormFlowOptions): UseFormFlowReturn {
     dispatch({ type: 'RESET', initialValues })
   }, [adapter, formId, initialValues, persistence])
 
-  const actions: FormFlowActions = useMemo(
+  const actions: TrekActions = useMemo(
     () => ({ next, back, goTo, setValues, reset, validate }),
     [next, back, goTo, setValues, reset, validate],
   )

@@ -53,7 +53,7 @@ function getInstalledDeps(): Record<string, string> {
 
 async function init() {
   br()
-  log(`${BOLD}FormFlow${RESET}  ${DIM}v0.1.0${RESET}`)
+  log(`${BOLD}FormTrek${RESET}  ${DIM}v0.1.0${RESET}`)
   br()
 
   if (!existsSync('package.json')) {
@@ -63,7 +63,7 @@ async function init() {
   }
 
   const pm      = detectPM()
-  const deps    = ['@shngffrddev/formflow', 'zod']
+  const deps    = ['formtrek', 'zod']
   const installed = getInstalledDeps()
   const missing   = deps.filter(d => !(d in installed))
 
@@ -103,16 +103,16 @@ async function init() {
   ok(`${missing.join(', ')} installed`)
   br()
   log(`${DIM}Get started:${RESET}`)
-  log(`  ${DIM}https://formflow.shngffrd.com/docs/getting-started${RESET}`)
+  log(`  ${DIM}https://formtrek.shngffrd.com/docs/getting-started${RESET}`)
   br()
 }
 
 function help() {
   br()
-  log(`${BOLD}FormFlow CLI${RESET}`)
+  log(`${BOLD}FormTrek CLI${RESET}`)
   br()
   log('Usage:')
-  log(`  ${CYAN}pnpm dlx @shngffrddev/formflow init${RESET}`)
+  log(`  ${CYAN}pnpm dlx formtrek init${RESET}`)
   br()
   log('Commands:')
   log(`  ${CYAN}init${RESET}    Install dependencies into your project`)

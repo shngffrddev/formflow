@@ -64,7 +64,7 @@ export function ConditionalBranching() {
       <H2 id="how-it-works">How it works</H2>
       <P>
         Every step can have an optional <Code>condition</Code> property. After each call
-        to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>, FormFlow
+        to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>, FormTrek
         re-evaluates all conditions against the current accumulated values and rebuilds
         the active step list.
       </P>
@@ -179,7 +179,7 @@ condition: { field: 'workStyle', op: 'neq', value: 'remote-only' }`}</Pre>
         The hook exposes <Code>state.activeStepIds</Code> — the ordered array of step IDs
         that are currently visible. Use this to build progress indicators or navigation.
       </P>
-      <Pre>{`const { state } = useFormFlow({ ... })
+      <Pre>{`const { state } = useTrek({ ... })
 
 // Current progress
 const total = state.activeStepIds.length

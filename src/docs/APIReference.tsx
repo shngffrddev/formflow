@@ -73,11 +73,11 @@ export function APIReference() {
   const { setItems } = useTOC()
   useEffect(() => {
     setItems([
-      { id: 'use-form-flow', label: 'useFormFlow()' },
+      { id: 'use-form-flow', label: 'useTrek()' },
       { id: 'step-definition', label: 'StepDefinition' },
-      { id: 'form-flow-state', label: 'FormFlowState' },
+      { id: 'form-flow-state', label: 'TrekState' },
       { id: 'step-state', label: 'StepState' },
-      { id: 'form-flow-actions', label: 'FormFlowActions' },
+      { id: 'form-flow-actions', label: 'TrekActions' },
       { id: 'condition', label: 'Condition' },
       { id: 'persistence-adapter', label: 'PersistenceAdapter' },
       { id: 'all-exports', label: 'All exports' },
@@ -90,16 +90,16 @@ export function APIReference() {
         <p className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-2">Reference</p>
         <H1>API Reference</H1>
         <p className="text-lg text-zinc-500 leading-relaxed">
-          Complete reference for <Code>useFormFlow</Code>, its options, return values, and all exported types.
+          Complete reference for <Code>useTrek</Code>, its options, return values, and all exported types.
         </p>
       </div>
 
-      {/* useFormFlow */}
-      <H2 id="use-form-flow">useFormFlow(options)</H2>
+      {/* useTrek */}
+      <H2 id="use-form-flow">useTrek(options)</H2>
       <P>The main hook. Returns <Code>state</Code>, <Code>actions</Code>, and <Code>currentStep</Code>.</P>
-      <Pre>{`import { useFormFlow } from 'formflow'
+      <Pre>{`import { useTrek } from 'formtrek'
 
-const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
+const { state, actions, currentStep } = useTrek(options)`}</Pre>
 
       <H3>Options</H3>
       <div className="border border-zinc-100 rounded-xl overflow-hidden my-4">
@@ -160,10 +160,10 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
         </table>
       </div>
 
-      {/* FormFlowState */}
-      <H2 id="form-flow-state">FormFlowState</H2>
+      {/* TrekState */}
+      <H2 id="form-flow-state">TrekState</H2>
       <P>The complete form state returned as <Code>state</Code> from the hook.</P>
-      <Pre>{`interface FormFlowState {
+      <Pre>{`interface TrekState {
   values: FormValues
   steps: Record<StepId, StepState>
   activeStepIds: StepId[]
@@ -233,8 +233,8 @@ const { state, actions, currentStep } = useFormFlow(options)`}</Pre>
         </table>
       </div>
 
-      {/* FormFlowActions */}
-      <H2 id="form-flow-actions">FormFlowActions</H2>
+      {/* TrekActions */}
+      <H2 id="form-flow-actions">TrekActions</H2>
       <P>All mutation methods returned as <Code>actions</Code> from the hook.</P>
       <div className="border border-zinc-100 rounded-xl overflow-hidden my-4">
         <table className="w-full text-sm">
@@ -298,7 +298,7 @@ type FormValues = Record<string, FieldValue>`}</Pre>
       {/* Exports */}
       <H2 id="all-exports">All exports</H2>
       <Pre>{`// Hook
-export { useFormFlow } from 'formflow'
+export { useTrek } from 'formtrek'
 
 // Persistence adapters
 export {
@@ -306,18 +306,18 @@ export {
   sessionStorageAdapter,
   urlParamsAdapter,
   nullAdapter,
-} from 'formflow'
+} from 'formtrek'
 
 // Utilities
-export { evaluateCondition, resolveActiveSteps, validateStep } from 'formflow'
+export { evaluateCondition, resolveActiveSteps, validateStep } from 'formtrek'
 
 // Types
 export type {
   StepDefinition, StepId, StepStatus, StepState,
-  FormFlowState, FormFlowActions, UseFormFlowReturn, UseFormFlowOptions,
+  TrekState, TrekActions, UseTrekReturn, UseTrekOptions,
   Condition, SimpleCondition, CompoundCondition,
   FormValues, FieldValue, PersistenceAdapter,
-} from 'formflow'`}</Pre>
+} from 'formtrek'`}</Pre>
     </article>
   )
 }

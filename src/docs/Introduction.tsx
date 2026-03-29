@@ -27,9 +27,9 @@ export function Introduction() {
   const { setItems } = useTOC()
   useEffect(() => {
     setItems([
-      { id: 'why-formflow', label: 'Why FormFlow?' },
+      { id: 'why-formflow', label: 'Why FormTrek?' },
       { id: 'core-concepts', label: 'Core concepts' },
-      { id: 'what-formflow-is-not', label: 'What FormFlow is not' },
+      { id: 'what-formflow-is-not', label: 'What FormTrek is not' },
       { id: 'quick-look', label: 'Quick look' },
     ])
     return () => setItems([])
@@ -41,17 +41,17 @@ export function Introduction() {
         <p className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-2">Overview</p>
         <H1>Introduction</H1>
         <p className="text-lg text-zinc-500 leading-relaxed">
-          FormFlow is a React hook library for multi-step forms with conditional branching,
+          FormTrek is a React hook library for multi-step forms with conditional branching,
           Zod validation, and partial persistence.
         </p>
       </div>
 
-      <H2 id="why-formflow">Why FormFlow?</H2>
+      <H2 id="why-formflow">Why FormTrek?</H2>
       <P>
         Multi-step forms appear simple until you need to conditionally show or skip steps
         based on earlier answers, let users save their progress and return later, or
         reuse the same validation logic on your server. Most solutions handle one of
-        these well. FormFlow handles all three.
+        these well. FormTrek handles all three.
       </P>
       <P>
         The library is <strong>headless</strong> — it manages state, navigation, validation,
@@ -61,7 +61,7 @@ export function Introduction() {
 
       <H2 id="core-concepts">Core concepts</H2>
       <P>
-        FormFlow is built around three ideas:
+        FormTrek is built around three ideas:
       </P>
       <div className="space-y-4 my-6">
         <div className="border border-zinc-100 rounded-xl p-5">
@@ -75,7 +75,7 @@ export function Introduction() {
         <div className="border border-zinc-100 rounded-xl p-5">
           <p className="font-semibold mb-1">Conditions</p>
           <p className="text-sm text-zinc-500 leading-relaxed">
-            A condition is a plain object that FormFlow evaluates on every value change.
+            A condition is a plain object that FormTrek evaluates on every value change.
             If the condition resolves to <Code>false</Code>, the step is removed from
             the active sequence entirely — no JSX branching required.
           </p>
@@ -84,15 +84,15 @@ export function Introduction() {
           <p className="font-semibold mb-1">Persistence adapters</p>
           <p className="text-sm text-zinc-500 leading-relaxed">
             A persistence adapter is an object with <Code>load</Code>, <Code>save</Code>,
-            and <Code>clear</Code> methods. FormFlow ships four built-in adapters and
+            and <Code>clear</Code> methods. FormTrek ships four built-in adapters and
             accepts any custom implementation.
           </p>
         </div>
       </div>
 
-      <H2 id="what-formflow-is-not">What FormFlow is not</H2>
+      <H2 id="what-formflow-is-not">What FormTrek is not</H2>
       <P>
-        FormFlow is not a form renderer. It does not generate inputs, labels, or layouts.
+        FormTrek is not a form renderer. It does not generate inputs, labels, or layouts.
         It gives you state and a set of actions — what you render with them is up to you.
       </P>
       <P>
@@ -103,10 +103,10 @@ export function Introduction() {
       </P>
 
       <H2 id="quick-look">Quick look</H2>
-      <Pre>{`import { useFormFlow, localStorageAdapter } from 'formflow'
+      <Pre>{`import { useTrek, localStorageAdapter } from 'formtrek'
 import { z } from 'zod'
 
-const { state, actions, currentStep } = useFormFlow({
+const { state, actions, currentStep } = useTrek({
   formId: 'signup',
   steps: [
     {

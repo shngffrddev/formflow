@@ -1,7 +1,7 @@
-import type { FormFlowState, FormValues, StepDefinition, StepId } from '@lib/types'
+import type { TrekState, FormValues, StepDefinition, StepId } from '@lib/types'
 
 interface Props {
-  state: FormFlowState
+  state: TrekState
   stepDefs: StepDefinition[]
   onGoTo: (id: StepId) => void
 }

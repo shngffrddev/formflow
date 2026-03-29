@@ -54,7 +54,7 @@ export function GettingStarted() {
         <p className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-2">Overview</p>
         <H1>Getting Started</H1>
         <p className="text-lg text-zinc-500 leading-relaxed">
-          Install FormFlow, define your steps, and have a working multi-step form in under
+          Install FormTrek, define your steps, and have a working multi-step form in under
           five minutes.
         </p>
       </div>
@@ -64,15 +64,15 @@ export function GettingStarted() {
         The quickest way is to use the CLI, which detects your package manager and
         installs everything automatically:
       </P>
-      <PackageManagerTabs packages="dlx @shngffrddev/formflow init" mode="dlx" />
+      <PackageManagerTabs packages="dlx formtrek init" mode="dlx" />
       <P>
-        Or install manually — FormFlow requires React 18+ and Zod 3+ as peer dependencies:
+        Or install manually — FormTrek requires React 18+ and Zod 3+ as peer dependencies:
       </P>
-      <PackageManagerTabs packages="@shngffrddev/formflow zod" />
+      <PackageManagerTabs packages="formtrek zod" />
 
       <H2 id="your-first-form">Your first form</H2>
       <P>
-        Building a form with FormFlow involves four steps. Let's walk through each one.
+        Building a form with FormTrek involves four steps. Let's walk through each one.
       </P>
 
       <Step n={1} label="Define your steps" />
@@ -83,7 +83,7 @@ export function GettingStarted() {
         the step is included.
       </P>
       <Pre>{`import { z } from 'zod'
-import type { StepDefinition } from 'formflow'
+import type { StepDefinition } from 'formtrek'
 
 const steps: StepDefinition[] = [
   {
@@ -110,16 +110,16 @@ const steps: StepDefinition[] = [
   },
 ]`}</Pre>
 
-      <Step n={2} label="Call useFormFlow" />
+      <Step n={2} label="Call useTrek" />
       <P>
-        Pass your steps and a unique <Code>formId</Code> to <Code>useFormFlow</Code>.
+        Pass your steps and a unique <Code>formId</Code> to <Code>useTrek</Code>.
         The hook returns <Code>state</Code>, <Code>actions</Code>, and
         <Code>currentStep</Code>.
       </P>
-      <Pre>{`import { useFormFlow, localStorageAdapter } from 'formflow'
+      <Pre>{`import { useTrek, localStorageAdapter } from 'formtrek'
 
 function MyForm() {
-  const { state, actions, currentStep } = useFormFlow({
+  const { state, actions, currentStep } = useTrek({
     formId: 'onboarding',
     steps,
     persistence: localStorageAdapter, // save progress to localStorage
@@ -192,7 +192,7 @@ return (
       <P>
         Putting it all together — a minimal but complete two-step form:
       </P>
-      <Pre>{`import { useFormFlow, localStorageAdapter } from 'formflow'
+      <Pre>{`import { useTrek, localStorageAdapter } from 'formtrek'
 import { z } from 'zod'
 
 const steps = [
@@ -212,7 +212,7 @@ const steps = [
 ]
 
 export function OnboardingForm() {
-  const { state, actions, currentStep } = useFormFlow({
+  const { state, actions, currentStep } = useTrek({
     formId: 'onboarding',
     steps,
     persistence: localStorageAdapter,
@@ -270,7 +270,7 @@ export function OnboardingForm() {
           { to: '/docs/conditional-branching', label: 'Conditional Branching', desc: 'Show or skip steps based on earlier answers' },
           { to: '/docs/validation', label: 'Validation', desc: 'Per-step Zod schemas and server-side reuse' },
           { to: '/docs/persistence', label: 'Persistence', desc: 'localStorage, sessionStorage, URL params, custom' },
-          { to: '/docs/api', label: 'API Reference', desc: 'Full useFormFlow options, state, and actions' },
+          { to: '/docs/api', label: 'API Reference', desc: 'Full useTrek options, state, and actions' },
         ].map(item => (
           <Link
             key={item.to}

@@ -4,7 +4,7 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar({ currentIndex, total }: ProgressBarProps) {
-  const pct = total <= 1 ? 100 : Math.round((currentIndex / (total - 1)) * 100)
+  const pct = total <= 1 ? 100 : Math.round(((currentIndex + 1) / total) * 100)
   return (
     <div className="px-8 pt-5 pb-1">
       <div className="flex items-center justify-between mb-1.5">

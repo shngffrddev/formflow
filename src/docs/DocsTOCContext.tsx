@@ -8,14 +8,29 @@ export interface TOCItem {
 interface TOCCtx {
   items: TOCItem[]
   setItems: (items: TOCItem[]) => void
+  activeId: string | null
+  setActiveId: (id: string | null) => void
 }
 
-const TOCContext = createContext<TOCCtx>({ items: [], setItems: () => {} })
+const TOCContext = createContext<TOCCtx>({
+  items: [],
+  setItems: () => {},
+  activeId: null,
+  setActiveId: () => {},
+})
 
 export function TOCProvider({ children }: { children: ReactNode }) {
   const [items, setItemsState] = useState<TOCItem[]>([])
-  const setItems = useCallback((next: TOCItem[]) => setItemsState(next), [])
-  return <TOCContext.Provider value={{ items, setItems }}>{children}</TOCContext.Provider>
+  const [activeId, setActiveId] = useState<string | null>(null)
+  const setItems = useCallback((next: TOCItem[]) => {
+    setItemsState(next)
+    setActiveId(null)
+  }, [])
+  return (
+    <TOCContext.Provider value={{ items, setItems, activeId, setActiveId }}>
+      {children}
+    </TOCContext.Provider>
+  )
 }
 
 export function useTOC() {

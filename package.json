@@ -1,5 +1,5 @@
 {
-  "name": "@shngffrddev/formflow",
+  "name": "formtrek",
   "version": "0.2.2",
   "description": "Multi-step forms with conditional branching, Zod validation, and partial persistence.",
   "keywords": [
@@ -24,7 +24,7 @@
     }
   },
   "bin": {
-    "formflow": "cli/index.cjs"
+    "formtrek": "cli/index.cjs"
   },
   "files": [
     "lib",
@@ -45,7 +45,6 @@
     "zod": "^3.0.0"
   },
   "dependencies": {
-    "@shngffrddev/formflow": "^0.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.13.2",

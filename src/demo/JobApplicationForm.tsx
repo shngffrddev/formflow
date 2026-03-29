@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useFormFlow } from '@lib/useFormFlow'
+import { useTrek } from '@lib/useTrek'
 import { FormShell } from '@components/FormShell'
 import { DevPanel } from '@components/DevPanel'
 import { steps } from './config/steps'
@@ -16,7 +16,7 @@ import { ReviewStep }             from './steps/ReviewStep'
 export function JobApplicationForm() {
   const [submitting, setSubmitting] = useState(false)
 
-  const { state, actions, currentStep } = useFormFlow({
+  const { state, actions, currentStep } = useTrek({
     formId: 'job-application',
     steps,
     onComplete: async () => {

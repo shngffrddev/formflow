@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Logo } from '@components/Logo'
 
-const PKG = '@shngffrddev/formflow zod'
+const PKG = 'formtrek zod'
 const MANAGERS = ['pnpm', 'npm', 'yarn', 'bun'] as const
 type Manager = typeof MANAGERS[number]
 const CMD: Record<Manager, string> = {
@@ -45,7 +46,7 @@ function InstallTabs() {
   )
 }
 
-const CODE_QUICK_START = `import { useFormFlow, localStorageAdapter } from 'formflow'
+const CODE_QUICK_START = `import { useTrek, localStorageAdapter } from 'formtrek'
 import { z } from 'zod'
 
 const steps = [
@@ -72,7 +73,7 @@ const steps = [
 ]
 
 function MyForm() {
-  const { state, actions, currentStep } = useFormFlow({
+  const { state, actions, currentStep } = useTrek({
     formId: 'onboarding',
     steps,
     persistence: localStorageAdapter,
@@ -104,22 +105,15 @@ export function LandingPage() {
       <header className="border-b border-zinc-100 sticky top-0 bg-white/95 backdrop-blur z-10">
         <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-md bg-brand-600 flex items-center justify-center shadow-sm">
-              <svg className="w-4 h-4 text-white" viewBox="0 0 16 16" fill="currentColor">
-                <rect x="2" y="2" width="5" height="5" rx="1" />
-                <rect x="9" y="2" width="5" height="5" rx="1" opacity=".6" />
-                <rect x="2" y="9" width="5" height="5" rx="1" opacity=".6" />
-                <rect x="9" y="9" width="5" height="5" rx="1" opacity=".3" />
-              </svg>
-            </div>
-            <span className="font-semibold text-[15px] tracking-tight">FormFlow</span>
+            <Logo size={26} />
+            <span className="font-semibold text-[15px] tracking-tight">FormTrek</span>
             <span className="px-1.5 py-0.5 rounded-full bg-zinc-100 text-zinc-500 text-[11px] font-medium font-mono border border-zinc-200">v0.2.2</span>
           </div>
           <nav className="flex items-center gap-1 text-sm text-zinc-600">
             <Link to="/docs/introduction" className="px-3 py-1.5 rounded-md hover:text-zinc-900 hover:bg-zinc-100 transition-colors">Docs</Link>
             <Link to="/demo" className="px-3 py-1.5 rounded-md hover:text-zinc-900 hover:bg-zinc-100 transition-colors">Demo</Link>
             <a
-              href="https://github.com/shngffrddev/formflow"
+              href="https://github.com/shngffrddev/formtrek"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-md hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
@@ -150,7 +144,7 @@ export function LandingPage() {
             Multi-step forms<br />that don't lose state.
           </h1>
           <p className="text-xl text-zinc-500 leading-relaxed mb-10 max-w-2xl">
-            FormFlow handles the parts that actually matter: conditional steps that
+            FormTrek handles the parts that actually matter: conditional steps that
             depend on earlier answers, saving progress so users can return later, and
             validation that works both client-side and server-side without duplicating
             the schema.
@@ -227,7 +221,7 @@ export function LandingPage() {
               </h2>
               <p className="text-zinc-500 leading-relaxed mb-6">
                 One hook. Define your steps as plain objects with Zod schemas and
-                optional conditions. FormFlow handles navigation, validation, and
+                optional conditions. FormTrek handles navigation, validation, and
                 persistence — you keep full control of rendering.
               </p>
               <ul className="space-y-3 text-sm text-zinc-600">
@@ -274,11 +268,11 @@ export function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-zinc-100 py-8">
         <div className="max-w-6xl mx-auto px-6 flex items-center justify-between text-sm text-zinc-400">
-          <span>FormFlow — MIT License</span>
+          <span>FormTrek — MIT License</span>
           <div className="flex items-center gap-6">
             <Link to="/docs/introduction" className="hover:text-zinc-600 transition-colors">Docs</Link>
             <Link to="/demo" className="hover:text-zinc-600 transition-colors">Demo</Link>
-            <a href="https://github.com/shngffrddev/formflow" className="hover:text-zinc-600 transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://github.com/shngffrddev/formtrek" className="hover:text-zinc-600 transition-colors" target="_blank" rel="noopener noreferrer">GitHub</a>
           </div>
         </div>
       </footer>

@@ -1,15 +1,15 @@
-# FormFlow
+# FormTrek
 
 Multi-step forms with conditional branching, Zod validation, and partial persistence.
 
 ### Install via CLI
 
 ```bash
-pnpm dlx @shngffrddev/formflow init
+pnpm dlx formtrek init
 ```
 
 ```bash
-npx @shngffrddev/formflow init
+npx folio init
 ```
 
 The CLI detects your package manager and installs all required dependencies automatically.
@@ -17,15 +17,15 @@ The CLI detects your package manager and installs all required dependencies auto
 ### Manual install
 
 ```bash
-pnpm add @shngffrddev/formflow zod
-npm install @shngffrddev/formflow zod
-yarn add @shngffrddev/formflow zod
-bun add @shngffrddev/formflow zod
+pnpm add formtrek zod
+npm install formtrek zod
+yarn add formtrek zod
+bun add formtrek zod
 ```
 
 ## Why
 
-Multi-step forms are deceptively tricky. The parts that matter — conditional steps that depend on earlier answers, saving progress so users can return later, and validation that works both client-side and server-side without duplicating the schema — aren't handled well by existing solutions. FormFlow is the abstraction that covers all three.
+Multi-step forms are deceptively tricky. The parts that matter — conditional steps that depend on earlier answers, saving progress so users can return later, and validation that works both client-side and server-side without duplicating the schema — aren't handled well by existing solutions. FormTrek is the abstraction that covers all three.
 
 ## Features
 
@@ -40,7 +40,7 @@ Multi-step forms are deceptively tricky. The parts that matter — conditional s
 ## Quick start
 
 ```tsx
-import { useFormFlow, localStorageAdapter } from '@shngffrddev/formflow'
+import { useTrek, localStorageAdapter } from 'formtrek'
 import { z } from 'zod'
 
 const steps = [
@@ -67,7 +67,7 @@ const steps = [
 ]
 
 function MyForm() {
-  const { state, actions, currentStep } = useFormFlow({
+  const { state, actions, currentStep } = useTrek({
     formId: 'onboarding',
     steps,
     persistence: localStorageAdapter,
@@ -105,7 +105,7 @@ function MyForm() {
 
 ---
 
-## useFormFlow(options)
+## useTrek(options)
 
 ### Options
 
@@ -121,8 +121,8 @@ function MyForm() {
 
 ```ts
 {
-  state: FormFlowState
-  actions: FormFlowActions
+  state: TrekState
+  actions: TrekActions
   currentStep: StepDefinition
 }
 ```
@@ -190,13 +190,13 @@ import {
   sessionStorageAdapter,  // sessionStorage — cleared on tab close
   urlParamsAdapter,       // ?state= URL param — shareable links
   nullAdapter,            // no-op — disables persistence
-} from '@shngffrddev/formflow'
+} from 'formtrek'
 ```
 
 ### Custom adapter
 
 ```ts
-import type { PersistenceAdapter } from '@shngffrddev/formflow'
+import type { PersistenceAdapter } from 'formtrek'
 
 const apiAdapter: PersistenceAdapter = {
   async load(formId) {

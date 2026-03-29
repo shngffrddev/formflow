@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve('src/lib/index.ts'),
-      name: 'FormFlow',
+      name: 'FormTrek',
       formats: ['es', 'cjs'],
       fileName: (format) => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
