@@ -1,35 +1,8 @@
 import { useEffect } from 'react'
 import { useTOC } from './DocsTOCContext'
-
-function H1({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
-}
-function H2({ children, id }: { children: React.ReactNode; id?: string }) {
-  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
-}
-function H3({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
-}
-function P({ children }: { children: React.ReactNode }) {
-  return <p className="text-zinc-600 leading-relaxed mb-4">{children}</p>
-}
-function Code({ children }: { children: React.ReactNode }) {
-  return <code className="bg-zinc-100 text-zinc-800 text-sm px-1.5 py-0.5 rounded font-mono">{children}</code>
-}
-function Pre({ children }: { children: string }) {
-  return (
-    <pre className="bg-zinc-900 text-zinc-200 text-sm font-mono rounded-xl p-5 overflow-x-auto leading-relaxed my-4">
-      <code>{children}</code>
-    </pre>
-  )
-}
-function Note({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="bg-zinc-50 border border-zinc-200 rounded-xl p-4 my-4 text-sm text-zinc-600 leading-relaxed">
-      {children}
-    </div>
-  )
-}
+import {
+  H1, H2, H3, Lead, P, Code, CodeBlock, Callout,
+} from './DocComponents'
 
 export function Validation() {
   const { setItems } = useTOC()
@@ -40,6 +13,7 @@ export function Validation() {
       { id: 'skipping-validation', label: 'Skipping validation' },
       { id: 'cross-field-validation', label: 'Cross-field validation' },
       { id: 'async-validation', label: 'Async validation' },
+      { id: 'manual-validation', label: 'Manual validation' },
       { id: 'server-side-reuse', label: 'Server-side reuse' },
     ])
     return () => setItems([])
@@ -47,22 +21,19 @@ export function Validation() {
 
   return (
     <article>
-      <div className="mb-8">
-        <p className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-2">Core Concepts</p>
-        <H1>Validation</H1>
-        <p className="text-lg text-zinc-500 leading-relaxed">
-          Each step is validated by a Zod schema when the user navigates forward.
-          The same schema can be reused on your server — one definition, two layers of safety.
-        </p>
-      </div>
+      <H1 badge="Core Concepts">Validation</H1>
+      <Lead>
+        Each step carries a Zod schema that is validated when the user navigates forward.
+        The same schema can be imported on your server — one definition, two layers of safety.
+      </Lead>
 
       <H2 id="attaching-a-schema">Attaching a schema to a step</H2>
       <P>
-        Set the <Code>schema</Code> property to a Zod object schema. FormTrek calls
-        <Code>schema.safeParseAsync(state.values)</Code> when <Code>actions.next()</Code>
-        is called and navigation is blocked if any errors are returned.
+        Set the <Code>schema</Code> property to a Zod object schema. FormTrek calls{' '}
+        <Code>schema.safeParseAsync(state.values)</Code> when <Code>actions.next()</Code>{' '}
+        is invoked, and blocks navigation if any errors are returned.
       </P>
-      <Pre>{`import { z } from 'zod'
+      <CodeBlock language="ts" filename="steps.ts">{`import { z } from 'zod'
 
 const steps = [
   {
@@ -70,70 +41,72 @@ const steps = [
     title: 'Contact Info',
     schema: z.object({
       email: z.string().email('Please enter a valid email'),
-      phone: z.string().regex(/^[+0-9\\s-()]{7,}$/, 'Invalid phone number').optional(),
+      phone: z.string().regex(/^[+0-9\\s-()]{7,}$/, 'Invalid phone').optional(),
     }),
   },
-]`}</Pre>
+]`}</CodeBlock>
 
-      <Note>
-        <strong>Note:</strong> FormTrek validates the entire <Code>state.values</Code> object
-        against the step's schema. Schema fields that don't exist in <Code>values</Code>
-        will fail required checks — make sure your schemas use <Code>.optional()</Code>
-        or <Code>.default()</Code> for fields that haven't been filled yet.
-      </Note>
+      <Callout type="warning">
+        FormTrek validates the entire <Code>state.values</Code> object against the step's
+        schema. Fields that haven't been filled yet will fail required checks —
+        use <Code>.optional()</Code> or <Code>.default()</Code> for fields that belong to
+        later steps.
+      </Callout>
 
       <H2 id="accessing-errors">Accessing validation errors</H2>
       <P>
-        After a failed navigation attempt, errors are available at
+        After a failed navigation attempt, errors are available at{' '}
         <Code>state.steps[stepId].errors</Code> — a plain object mapping field paths to
         error messages.
       </P>
-      <Pre>{`const { state, currentStep } = useTrek({ ... })
+      <CodeBlock language="tsx">{`const { state, currentStep } = useTrek({ ... })
 const errors = state.steps[currentStep.id]?.errors ?? {}
 
 return (
   <div>
     <input value={...} onChange={...} />
     {errors.email && (
-      <p role="alert" className="text-red-500 text-sm">{errors.email}</p>
+      <p role="alert" className="text-red-500 text-sm mt-1">
+        {errors.email}
+      </p>
     )}
   </div>
-)`}</Pre>
+)`}</CodeBlock>
 
       <H2 id="skipping-validation">Skipping validation</H2>
       <P>
         Set <Code>schema: null</Code> to disable validation for a step entirely.
-        This is common for review or confirmation steps that don't collect new data.
+        Common on review or confirmation steps that don't collect new data.
       </P>
-      <Pre>{`{
+      <CodeBlock language="ts">{`{
   id: 'review',
   title: 'Review & Submit',
   schema: null,
-}`}</Pre>
+}`}</CodeBlock>
 
       <H2 id="cross-field-validation">Cross-field validation with .refine()</H2>
       <P>
         Zod's <Code>.refine()</Code> and <Code>.superRefine()</Code> work as expected.
-        FormTrek unwraps <Code>ZodEffects</Code> automatically, so cross-field errors
-        are surfaced at the field level.
+        FormTrek unwraps <Code>ZodEffects</Code> automatically so cross-field errors
+        are surfaced at the correct field path.
       </P>
-      <Pre>{`const salarySchema = z.object({
+      <CodeBlock language="ts">{`const salarySchema = z.object({
   salaryMin: z.number().min(0),
   salaryMax: z.number().min(0),
 }).refine(
   (data) => data.salaryMax >= data.salaryMin,
   {
-    message: 'Maximum must be greater than or equal to minimum',
+    message: 'Maximum must be ≥ minimum',
     path: ['salaryMax'],
   }
-)`}</Pre>
+)`}</CodeBlock>
 
       <H2 id="async-validation">Async validation</H2>
       <P>
         FormTrek uses <Code>safeParseAsync</Code> internally, so async Zod refinements
         work without any extra configuration:
       </P>
-      <Pre>{`const usernameSchema = z.object({
+      <CodeBlock language="ts">{`const usernameSchema = z.object({
   username: z.string()
     .min(3)
     .refine(
@@ -143,43 +116,42 @@ return (
       },
       { message: 'Username is already taken' }
     ),
-})`}</Pre>
+})`}</CodeBlock>
 
       <H2 id="manual-validation">Manual validation</H2>
       <P>
-        You can trigger validation without advancing the form using
-        <Code>actions.validate()</Code>. It returns a promise that resolves to an
-        error map, and updates <Code>state.steps[currentStep.id].errors</Code> as a
-        side effect.
+        Trigger validation without advancing using <Code>actions.validate()</Code>.
+        It returns a promise resolving to an error map, and updates{' '}
+        <Code>state.steps[currentStep.id].errors</Code> as a side effect — useful for
+        on-blur validation.
       </P>
-      <Pre>{`const handleBlur = async () => {
+      <CodeBlock language="tsx">{`// On-blur validation
+const handleBlur = async () => {
   await actions.validate()
 }
 
-// Or check for errors programmatically:
+// Programmatic check
 const errors = await actions.validate()
 if (Object.keys(errors).length === 0) {
-  // step is valid
-}`}</Pre>
+  // step is valid — safe to proceed
+}`}</CodeBlock>
 
       <H2 id="server-side-reuse">Reusing schemas server-side</H2>
       <P>
-        Because schemas are plain Zod objects, you can export them from your step
-        definitions and import them in your API route handlers. No duplication required.
+        Because schemas are plain Zod objects, you can export them and import them
+        directly in API route handlers. No duplication required.
       </P>
 
-      <H3>Shared schema file</H3>
-      <Pre>{`// src/schemas/contact.ts
-import { z } from 'zod'
+      <H3>1. Shared schema file</H3>
+      <CodeBlock language="ts" filename="src/schemas/contact.ts">{`import { z } from 'zod'
 
 export const contactSchema = z.object({
   email: z.string().email(),
   name: z.string().min(1),
-})`}</Pre>
+})`}</CodeBlock>
 
-      <H3>Client — FormTrek step</H3>
-      <Pre>{`// src/steps.ts
-import { contactSchema } from './schemas/contact'
+      <H3>2. Client — FormTrek step</H3>
+      <CodeBlock language="ts" filename="src/steps.ts">{`import { contactSchema } from './schemas/contact'
 
 export const steps = [
   {
@@ -187,10 +159,10 @@ export const steps = [
     title: 'Contact Info',
     schema: contactSchema,
   },
-]`}</Pre>
+]`}</CodeBlock>
 
-      <H3>Server — API route</H3>
-      <Pre>{`// app/api/submit/route.ts  (Next.js App Router example)
+      <H3>3. Server — API route</H3>
+      <CodeBlock language="ts" filename="app/api/submit/route.ts">{`// Next.js App Router example
 import { contactSchema } from '@/schemas/contact'
 
 export async function POST(req: Request) {
@@ -198,17 +170,20 @@ export async function POST(req: Request) {
   const result = contactSchema.safeParse(body)
 
   if (!result.success) {
-    return Response.json({ errors: result.error.flatten() }, { status: 400 })
+    return Response.json(
+      { errors: result.error.flatten() },
+      { status: 400 }
+    )
   }
 
   // process result.data ...
-}`}</Pre>
+}`}</CodeBlock>
 
-      <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mt-6 text-sm text-emerald-800 leading-relaxed">
-        <strong>One schema, two layers of safety.</strong> Client-side validation blocks
-        navigation and gives immediate feedback. Server-side validation catches anything
-        that slips through — malformed requests, direct API calls, or a stale client bundle.
-      </div>
+      <Callout type="important" title="One schema, two layers">
+        Client-side validation blocks navigation and gives immediate feedback.
+        Server-side validation catches anything that slips through — malformed requests,
+        direct API calls, or a stale client bundle.
+      </Callout>
     </article>
   )
 }

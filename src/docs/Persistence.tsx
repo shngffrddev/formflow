@@ -1,55 +1,8 @@
 import { useEffect } from 'react'
 import { useTOC } from './DocsTOCContext'
-
-function H1({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-3xl font-bold tracking-tight mb-3">{children}</h1>
-}
-function H2({ children, id }: { children: React.ReactNode; id?: string }) {
-  return <h2 id={id} className="text-xl font-semibold tracking-tight mt-10 mb-3 scroll-mt-20">{children}</h2>
-}
-function H3({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-base font-semibold mt-6 mb-2">{children}</h3>
-}
-function P({ children }: { children: React.ReactNode }) {
-  return <p className="text-zinc-600 leading-relaxed mb-4">{children}</p>
-}
-function Code({ children }: { children: React.ReactNode }) {
-  return <code className="bg-zinc-100 text-zinc-800 text-sm px-1.5 py-0.5 rounded font-mono">{children}</code>
-}
-function Pre({ children }: { children: string }) {
-  return (
-    <pre className="bg-zinc-900 text-zinc-200 text-sm font-mono rounded-xl p-5 overflow-x-auto leading-relaxed my-4">
-      <code>{children}</code>
-    </pre>
-  )
-}
-
-const ADAPTERS = [
-  {
-    name: 'localStorageAdapter',
-    key: 'formtrek:<formId>',
-    survives: 'Page reload, browser close',
-    useWhen: 'Default choice for most forms',
-  },
-  {
-    name: 'sessionStorageAdapter',
-    key: 'formtrek:<formId>',
-    survives: 'Page reload only',
-    useWhen: 'Sensitive data you don\'t want to outlast the session',
-  },
-  {
-    name: 'urlParamsAdapter',
-    key: '?state= URL param',
-    survives: 'URL is shared or bookmarked',
-    useWhen: 'Shareable "resume later" links',
-  },
-  {
-    name: 'nullAdapter',
-    key: '—',
-    survives: '—',
-    useWhen: 'Disable persistence entirely',
-  },
-]
+import {
+  H1, H2, H3, Lead, P, Code, CodeBlock, Callout,
+} from './DocComponents'
 
 export function Persistence() {
   const { setItems } = useTOC()
@@ -63,60 +16,69 @@ export function Persistence() {
     ])
     return () => setItems([])
   }, [setItems])
+
   return (
     <article>
-      <div className="mb-8">
-        <p className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-2">Core Concepts</p>
-        <H1>Persistence</H1>
-        <p className="text-lg text-zinc-500 leading-relaxed">
-          Form state serialises to JSON and can be saved anywhere. Users can close
-          the tab and pick up exactly where they left off.
-        </p>
-      </div>
+      <H1 badge="Core Concepts">Persistence</H1>
+      <Lead>
+        Form state serialises to JSON and can be saved anywhere. Users can close the
+        tab and pick up exactly where they left off.
+      </Lead>
 
       <H2 id="how-it-works">How it works</H2>
       <P>
         On every call to <Code>actions.setValues()</Code> or <Code>actions.next()</Code>,
-        FormTrek calls <Code>adapter.save(formId, values)</Code> with the latest accumulated
-        values. On mount, it calls <Code>adapter.load(formId)</Code> and uses the result as
+        FormTrek calls <Code>adapter.save(formId, values)</Code> with the latest values.
+        On mount, it calls <Code>adapter.load(formId)</Code> and merges the result into
         the initial values. When the form completes, it calls <Code>adapter.clear(formId)</Code>.
+      </P>
+      <P>
+        Persistence adapters are swappable — pass any built-in adapter or your own
+        implementation to the <Code>persistence</Code> option.
       </P>
 
       <H2 id="built-in-adapters">Built-in adapters</H2>
-      <div className="border border-zinc-100 rounded-xl overflow-hidden my-6">
-        <table className="w-full text-sm">
-          <thead className="bg-zinc-50 border-b border-zinc-100">
-            <tr>
-              <th className="text-left px-4 py-3 font-medium text-zinc-600">Adapter</th>
-              <th className="text-left px-4 py-3 font-medium text-zinc-600">Storage key</th>
-              <th className="text-left px-4 py-3 font-medium text-zinc-600">Use when</th>
-            </tr>
-          </thead>
-          <tbody>
-            {ADAPTERS.map((a, i) => (
-              <tr key={a.name} className={i % 2 === 0 ? 'bg-white' : 'bg-zinc-50/50'}>
-                <td className="px-4 py-3 font-mono text-xs text-zinc-800">{a.name}</td>
-                <td className="px-4 py-3 text-zinc-500 text-xs font-mono">{a.key}</td>
-                <td className="px-4 py-3 text-zinc-600">{a.useWhen}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-5">
+        <div className="rounded-xl border border-blue-200 bg-blue-50/50 p-4">
+          <code className="text-[12px] font-mono font-semibold px-1.5 py-0.5 rounded text-blue-700 bg-blue-100">localStorageAdapter</code>
+          <p className="text-sm text-zinc-700 mt-2 mb-1">The default choice for most forms.</p>
+          <p className="text-[11px] text-zinc-500">Survives: <span className="font-medium">Page reload + browser close</span></p>
+          <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Key: formtrek:{'<formId>'}</p>
+        </div>
+        <div className="rounded-xl border border-emerald-200 bg-emerald-50/50 p-4">
+          <code className="text-[12px] font-mono font-semibold px-1.5 py-0.5 rounded text-emerald-700 bg-emerald-100">sessionStorageAdapter</code>
+          <p className="text-sm text-zinc-700 mt-2 mb-1">Good for sensitive data that shouldn't outlast the session.</p>
+          <p className="text-[11px] text-zinc-500">Survives: <span className="font-medium">Page reload only</span></p>
+          <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Key: formtrek:{'<formId>'}</p>
+        </div>
+        <div className="rounded-xl border border-violet-200 bg-violet-50/50 p-4">
+          <code className="text-[12px] font-mono font-semibold px-1.5 py-0.5 rounded text-violet-700 bg-violet-100">urlParamsAdapter</code>
+          <p className="text-sm text-zinc-700 mt-2 mb-1">URL becomes the persistence layer — users can bookmark to resume.</p>
+          <p className="text-[11px] text-zinc-500">Survives: <span className="font-medium">URL is shared/bookmarked</span></p>
+          <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Key: ?state= URL param</p>
+        </div>
+        <div className="rounded-xl border border-zinc-200 bg-zinc-50/50 p-4">
+          <code className="text-[12px] font-mono font-semibold px-1.5 py-0.5 rounded text-zinc-600 bg-zinc-100">nullAdapter</code>
+          <p className="text-sm text-zinc-700 mt-2 mb-1">No-op adapter. Use to disable persistence without removing the option.</p>
+          <p className="text-[11px] text-zinc-500">Survives: <span className="font-medium">Never persisted</span></p>
+          <p className="text-[11px] text-zinc-500 font-mono mt-0.5">Key: —</p>
+        </div>
       </div>
 
-      <Pre>{`import {
+      <CodeBlock language="ts" filename="form.ts">{`import {
   localStorageAdapter,
   sessionStorageAdapter,
   urlParamsAdapter,
   nullAdapter,
 } from 'formtrek'
 
-// Pass to useTrek:
+// Swap adapters by changing this one line:
 useTrek({
   formId: 'signup',
   steps,
-  persistence: localStorageAdapter, // ← swap adapters here
-})`}</Pre>
+  persistence: localStorageAdapter,
+})`}</CodeBlock>
 
       <H3>localStorageAdapter</H3>
       <P>
@@ -127,50 +89,48 @@ useTrek({
 
       <H3>sessionStorageAdapter</H3>
       <P>
-        Saves to <Code>window.sessionStorage</Code>. Survives page reloads but is
-        cleared when the browser tab is closed. Good for forms containing sensitive
-        data you don't want to persist indefinitely.
+        Saves to <Code>window.sessionStorage</Code>. Survives page reloads but is cleared
+        when the browser tab is closed. Good for forms with sensitive data you don't want
+        to persist indefinitely.
       </P>
 
       <H3>urlParamsAdapter</H3>
       <P>
-        Encodes values as base64 JSON in the <Code>?state=</Code> URL parameter,
-        updated via <Code>history.replaceState</Code>. The URL itself becomes the
-        persistence layer — users can bookmark or share it to resume later.
+        Encodes values as base64 JSON in the <Code>?state=</Code> URL parameter, updated
+        via <Code>history.replaceState</Code>. The URL itself becomes the persistence
+        layer — users can bookmark or share it to resume later.
       </P>
-      <Pre>{`// User's URL looks like:
+      <CodeBlock language="ts">{`// URL looks like:
 // https://yourapp.com/apply?state=eyJ2YWx1ZXMiOnsiZmlyc3ROYW1lIjoiSmFuZSJ9fQ==
 
 // Decode it manually if needed:
 const raw = new URLSearchParams(location.search).get('state')
-const saved = raw ? JSON.parse(atob(raw)) : null`}</Pre>
+const saved = raw ? JSON.parse(atob(raw)) : null`}</CodeBlock>
 
       <H3>nullAdapter</H3>
       <P>
-        A no-op adapter that disables persistence entirely. Load always returns
-        <Code>null</Code>, save and clear do nothing. Useful in tests or when you want
-        to manage persistence yourself via <Code>onComplete</Code>.
+        A no-op adapter. Load always returns <Code>null</Code>, save and clear do nothing.
+        Useful in tests or when you want full control via <Code>onComplete</Code>.
       </P>
 
       <H2 id="disabling-persistence">Disabling persistence</H2>
       <P>
-        Pass <Code>persistence: null</Code> (or omit it) to disable persistence without
-        importing <Code>nullAdapter</Code>:
+        Pass <Code>persistence: null</Code> (or omit the option entirely) to disable
+        persistence without importing <Code>nullAdapter</Code>:
       </P>
-      <Pre>{`useTrek({
+      <CodeBlock language="ts">{`useTrek({
   formId: 'checkout',
   steps,
-  persistence: null,  // no persistence
-})`}</Pre>
+  persistence: null,  // no persistence — values reset on unmount
+})`}</CodeBlock>
 
       <H2 id="custom-adapters">Custom adapters</H2>
       <P>
         Any object that implements the <Code>PersistenceAdapter</Code> interface works.
-        This lets you save form state to a database, Redis, or any other storage layer.
+        Save form state to a database, Redis, or any other storage layer.
       </P>
-      <Pre>{`import type { PersistenceAdapter } from 'formtrek'
+      <CodeBlock language="ts" filename="api-adapter.ts">{`import type { PersistenceAdapter } from 'formtrek'
 
-// Example: save to your own API
 const apiAdapter: PersistenceAdapter = {
   async load(formId) {
     const res = await fetch(\`/api/drafts/\${formId}\`)
@@ -190,19 +150,25 @@ const apiAdapter: PersistenceAdapter = {
   async clear(formId) {
     await fetch(\`/api/drafts/\${formId}\`, { method: 'DELETE' })
   },
-}`}</Pre>
+}`}</CodeBlock>
 
-      <P>
+      <Callout type="tip">
         FormTrek calls <Code>load</Code> and <Code>save</Code> with <Code>await</Code>,
         so async adapters work without any extra configuration.
-      </P>
+      </Callout>
 
       <H2 id="resetting-state">Resetting saved state</H2>
       <P>
         Call <Code>actions.reset()</Code> to clear persisted values and return to step one.
         This calls <Code>adapter.clear(formId)</Code> internally.
       </P>
-      <Pre>{`<button onClick={actions.reset}>Start over</button>`}</Pre>
+      <CodeBlock language="tsx">{`<button
+  type="button"
+  onClick={actions.reset}
+  className="text-sm text-zinc-500 hover:text-red-600 transition-colors"
+>
+  Start over
+</button>`}</CodeBlock>
     </article>
   )
 }
