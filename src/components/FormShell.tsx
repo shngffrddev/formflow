@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { TrekActions, TrekState, StepDefinition } from '@lib/types'
+import { Link } from 'react-router-dom'
 import { ProgressBar } from './ProgressBar'
 import { StepIndicator } from './StepIndicator'
 import { NavigationButtons } from './NavigationButtons'
@@ -19,7 +20,16 @@ export function FormShell({ state, stepDefs, actions, children, isSubmitting }: 
       <div className="w-full max-w-4xl">
 
         {/* Header */}
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center relative">
+          <Link
+            to="/docs/introduction"
+            className="absolute left-0 top-1 inline-flex items-center gap-1 text-xs text-slate-400 hover:text-slate-600 transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path d="M15 18l-6-6 6-6"/>
+            </svg>
+            Docs
+          </Link>
           <div className="inline-flex items-center gap-2.5 mb-4">
             <Logo size={28} />
             <span className="text-base font-bold text-slate-800 tracking-tight">FormTrek</span>

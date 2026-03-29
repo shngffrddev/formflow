@@ -253,7 +253,7 @@ export function LandingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
               <Link
                 to="/docs/getting-started"
-                className="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-700 text-white px-7 py-3 rounded-xl font-semibold transition-colors text-[15px]"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold transition-colors text-[15px]"
               >
                 Get started
               </Link>
@@ -421,7 +421,7 @@ export function LandingPage() {
 
         <div className="relative max-w-2xl mx-auto">
           {/* Connecting line */}
-          <div className="absolute left-5 top-10 bottom-10 w-px bg-zinc-100" />
+          <div className="absolute left-5 top-10 bottom-10 w-px bg-blue-100" />
 
           {[
             {
@@ -447,7 +447,7 @@ export function LandingPage() {
           ].map((step) => (
             <div key={step.n} className="flex gap-6 pb-8 last:pb-0 relative">
               <div className="flex flex-col items-center shrink-0">
-                <div className="w-10 h-10 rounded-full bg-zinc-900 text-white text-sm font-bold flex items-center justify-center ring-4 ring-white z-10">
+                <div className="w-10 h-10 rounded-full bg-blue-600 text-white text-sm font-bold flex items-center justify-center ring-4 ring-white z-10">
                   {step.n}
                 </div>
               </div>
@@ -475,7 +475,7 @@ export function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
               to="/docs/introduction"
-              className="w-full sm:w-auto bg-zinc-900 hover:bg-zinc-700 text-white px-7 py-3 rounded-xl font-semibold transition-colors"
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold transition-colors"
             >
               Read the docs
             </Link>

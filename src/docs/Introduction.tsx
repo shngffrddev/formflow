@@ -38,19 +38,34 @@ export function Introduction() {
 
       <FeatureGrid items={[
         {
-          icon: '🌿',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+              <path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>
+            </svg>
+          ),
           label: 'Conditional branching',
           desc: "Steps show up or drop out as values change. Just a plain condition object — no JSX branching.",
+          iconBg: 'bg-blue-100 text-blue-700',
         },
         {
-          icon: '🔒',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+              <path d="m9 12 2 2 4-4m5.618-4.016A11.955 11.955 0 0 1 12 2.944a11.955 11.955 0 0 1-8.618 3.04A12.02 12.02 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+          ),
           label: 'Zod validation',
           desc: "One schema per step, checked on navigation. Bring the same schema to your API handler.",
+          iconBg: 'bg-emerald-100 text-emerald-700',
         },
         {
-          icon: '💾',
+          icon: (
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+              <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"/>
+            </svg>
+          ),
           label: 'Persistence',
           desc: "localStorage, sessionStorage, URL params, or your own adapter. Works out of the box.",
+          iconBg: 'bg-violet-100 text-violet-700',
         },
       ]} />
 

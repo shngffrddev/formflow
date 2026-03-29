@@ -31,7 +31,12 @@ export function GettingStarted() {
         and installs everything:
       </P>
       <PackageManagerTabs packages="dlx formtrek init" mode="dlx" />
-      <P>Or if you'd rather install manually — React 18+ and Zod 3+ are the only peer deps:</P>
+      <div className="flex items-center gap-3 my-4">
+        <span className="flex-1 h-px bg-zinc-100" />
+        <span className="text-xs text-zinc-400">or install manually</span>
+        <span className="flex-1 h-px bg-zinc-100" />
+      </div>
+      <P>React 18+ and Zod 3+ are the only peer deps:</P>
       <PackageManagerTabs packages="formtrek zod" />
 
       <Callout type="note">

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 // ─── Typography ───────────────────────────────────────────────────────────────
@@ -437,12 +437,14 @@ export function DocCard({ to, label, desc }: { to: string; label: string; desc: 
 
 // ─── Feature grid ─────────────────────────────────────────────────────────────
 
-export function FeatureGrid({ items }: { items: { icon: string; label: string; desc: string }[] }) {
+export function FeatureGrid({ items }: { items: { icon: React.ReactNode; label: string; desc: string; iconBg?: string }[] }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 my-6">
       {items.map(item => (
         <div key={item.label} className="border border-zinc-100 rounded-xl p-4 bg-zinc-50/50">
-          <div className="text-xl mb-2">{item.icon}</div>
+          <div className={`w-8 h-8 rounded-lg flex items-center justify-center mb-3 ${item.iconBg ?? 'bg-zinc-100 text-zinc-600'}`}>
+            {item.icon}
+          </div>
           <p className="font-semibold text-sm text-zinc-900 mb-1">{item.label}</p>
           <p className="text-xs text-zinc-500 leading-relaxed">{item.desc}</p>
         </div>
