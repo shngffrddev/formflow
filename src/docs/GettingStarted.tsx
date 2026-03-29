@@ -21,35 +21,35 @@ export function GettingStarted() {
     <article>
       <H1 badge="Getting Started">Quick Start</H1>
       <Lead>
-        Install FormTrek, define your steps, and have a working multi-step form running
-        in under five minutes.
+        Get FormTrek installed, define your steps, and you'll have a working multi-step
+        form. Shouldn't take more than five minutes.
       </Lead>
 
       <H2 id="installation">Installation</H2>
       <P>
-        The fastest way is the CLI — it detects your package manager and installs
-        FormTrek and Zod automatically:
+        The easiest way is the CLI — it figures out which package manager you're using
+        and installs everything:
       </P>
       <PackageManagerTabs packages="dlx formtrek init" mode="dlx" />
-      <P>Or install manually. FormTrek requires React 18+ and Zod 3+ as peer dependencies:</P>
+      <P>Or if you'd rather install manually — React 18+ and Zod 3+ are the only peer deps:</P>
       <PackageManagerTabs packages="formtrek zod" />
 
       <Callout type="note">
-        FormTrek is <strong>zero-dependency</strong> at runtime — React and Zod are peer deps,
-        not bundled. This keeps your bundle lean.
+        No extra weight at runtime. React and Zod are peer deps — they're already in
+        your project, so you're not pulling anything new in.
       </Callout>
 
       <H2 id="your-first-form">Your first form</H2>
       <P>
-        Building a form with FormTrek involves four steps.
+        There are four things to wire up. None of them are complicated.
       </P>
 
       <Steps>
         <Step n={1} label="Define your steps">
           <P>
-            Each step is a plain object. The <Code>id</Code> uniquely identifies the step,{' '}
-            <Code>schema</Code> is a Zod object schema for validation (or <Code>null</Code>{' '}
-            for read-only steps), and <Code>condition</Code> optionally controls visibility.
+            Each step is a plain object. Give it an <Code>id</Code>, a Zod <Code>schema</Code>{' '}
+            for validation (or <Code>null</Code> if there's nothing to validate on that step),
+            and optionally a <Code>condition</Code> to control when it appears.
           </P>
           <CodeBlock language="tsx" filename="steps.ts">{`import { z } from 'zod'
 import type { StepDefinition } from 'formtrek'
@@ -82,9 +82,9 @@ const steps: StepDefinition[] = [
 
         <Step n={2} label="Call useTrek">
           <P>
-            Pass your steps and a unique <Code>formId</Code> to <Code>useTrek</Code>.
-            The hook returns <Code>state</Code>, <Code>actions</Code>, and{' '}
-            <Code>currentStep</Code>.
+            Hand off your steps and a <Code>formId</Code> to <Code>useTrek</Code>.
+            Back comes <Code>state</Code> to read from, <Code>actions</Code> to call, and{' '}
+            <Code>currentStep</Code> to branch on — that's all you'll need.
           </P>
           <CodeBlock language="tsx" filename="MyForm.tsx">{`import { useTrek, localStorageAdapter } from 'formtrek'
 
@@ -107,10 +107,10 @@ function MyForm() {
 
         <Step n={3} label="Render each step">
           <P>
-            Use <Code>currentStep.id</Code> to decide what to render. Field values
-            live in <Code>state.values</Code> — update them with{' '}
-            <Code>actions.setValues()</Code>. Errors are in{' '}
-            <Code>state.steps[currentStep.id].errors</Code>.
+            Check <Code>currentStep.id</Code> to know which fields to show. Values live
+            in <Code>state.values</Code>, validation errors in{' '}
+            <Code>state.steps[currentStep.id].errors</Code>. Update values by calling{' '}
+            <Code>actions.setValues()</Code>.
           </P>
           <CodeBlock language="tsx">{`const stepErrors = state.steps[currentStep.id]?.errors ?? {}
 
@@ -143,9 +143,9 @@ return (
 
         <Step n={4} label="Handle completion">
           <P>
-            When the user submits the final step, <Code>actions.next()</Code> calls
-            your <Code>onComplete</Code> callback with all accumulated values.
-            Use <Code>state.isComplete</Code> to show a success screen.
+            On the last step, <Code>actions.next()</Code> calls your <Code>onComplete</Code>{' '}
+            with everything that's been collected. When <Code>state.isComplete</Code> flips
+            to true, swap in your success screen.
           </P>
           <CodeBlock language="tsx">{`if (state.isComplete) {
   return (
@@ -159,7 +159,7 @@ return (
       </Steps>
 
       <H2 id="full-example">Full example</H2>
-      <P>Putting it all together — a minimal but complete two-step form:</P>
+      <P>Here's everything together in one component:</P>
       <CodeBlock language="tsx" filename="OnboardingForm.tsx">{`import { useTrek, localStorageAdapter } from 'formtrek'
 import { z } from 'zod'
 
@@ -241,10 +241,10 @@ export function OnboardingForm() {
 
       <H2 id="next-steps">Next steps</H2>
       <CardGrid>
-        <DocCard to="/docs/conditional-branching" label="Conditional Branching" desc="Show or skip steps based on earlier answers — no JSX required" />
-        <DocCard to="/docs/validation" label="Validation" desc="Per-step Zod schemas, async validators, and server-side reuse" />
-        <DocCard to="/docs/persistence" label="Persistence" desc="localStorage, sessionStorage, URL params, or build your own adapter" />
-        <DocCard to="/docs/api" label="API Reference" desc="Full useTrek options, state, actions, and TypeScript types" />
+        <DocCard to="/docs/conditional-branching" label="Conditional Branching" desc="Show, skip, or reorder steps based on earlier answers" />
+        <DocCard to="/docs/validation" label="Validation" desc="How validation works, where errors live, and how to reuse schemas on the server" />
+        <DocCard to="/docs/persistence" label="Persistence" desc="Save form progress with the built-in adapters or write your own" />
+        <DocCard to="/docs/api" label="API Reference" desc="Every option, every return value, all the TypeScript types" />
       </CardGrid>
     </article>
   )

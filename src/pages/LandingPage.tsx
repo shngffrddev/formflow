@@ -32,7 +32,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'Conditional branching',
-    desc: 'Steps appear or disappear based on what the user has already entered. Logic lives in plain objects — no JSX, no custom DSL, no prop drilling.',
+    desc: "Steps show up or drop out based on what someone's already typed. The logic is a plain object — no JSX conditionals, no prop drilling, nothing custom to learn.",
     accent: 'from-blue-50 to-blue-50/0 border-blue-100',
     iconBg: 'bg-blue-100 text-blue-700',
   },
@@ -43,7 +43,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'Zod validation',
-    desc: 'Per-step Zod schemas validated on navigation. The same schema runs on your server — one definition, two layers of safety, zero duplication.',
+    desc: "Write your schema once, validate on the client when the user clicks Next, then run the exact same schema on your server. One definition, two places.",
     accent: 'from-emerald-50 to-emerald-50/0 border-emerald-100',
     iconBg: 'bg-emerald-100 text-emerald-700',
   },
@@ -54,7 +54,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'Partial persistence',
-    desc: 'Built-in localStorage, sessionStorage, URL params, or a custom API adapter. Users close the tab and resume exactly where they left off.',
+    desc: "Users close the tab. Life happens. With one line they pick up right where they left off — localStorage, sessionStorage, URL params, or your own API.",
     accent: 'from-violet-50 to-violet-50/0 border-violet-100',
     iconBg: 'bg-violet-100 text-violet-700',
   },
@@ -65,7 +65,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'Headless by design',
-    desc: 'FormTrek manages state, navigation, validation, and persistence. Rendering is entirely yours — any UI library, any styling approach.',
+    desc: "You handle all the markup. FormTrek handles state, step tracking, validation, and saving progress. Bring any UI library, any CSS approach.",
     accent: 'from-amber-50 to-amber-50/0 border-amber-100',
     iconBg: 'bg-amber-100 text-amber-700',
   },
@@ -76,7 +76,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'TypeScript-first',
-    desc: 'Fully typed generics throughout. State, actions, and step definitions all infer correctly from your schema definitions.',
+    desc: "Everything's inferred from your Zod schemas. State, actions, step definitions — all typed. No manual annotations needed.",
     accent: 'from-sky-50 to-sky-50/0 border-sky-100',
     iconBg: 'bg-sky-100 text-sky-700',
   },
@@ -87,7 +87,7 @@ const FEATURES = [
       </svg>
     ),
     label: 'Tiny footprint',
-    desc: 'Under 2.1kb gzipped with zero runtime dependencies. React and Zod are peer deps — only pay for what you already have.',
+    desc: "2.1kb gzipped, nothing bundled. React and Zod are peer deps you already have — you're not pulling in anything new.",
     accent: 'from-rose-50 to-rose-50/0 border-rose-100',
     iconBg: 'bg-rose-100 text-rose-700',
   },
@@ -245,8 +245,8 @@ export function LandingPage() {
             </h1>
 
             <p className="text-lg sm:text-xl text-zinc-500 leading-relaxed mb-10 max-w-xl mx-auto">
-              Conditional branching, Zod validation, and partial persistence —
-              in one headless React hook. You own the UI, FormTrek owns the complexity.
+              Conditional steps, saved progress, and proper validation — three things
+              every multi-step form needs. One hook. You keep the UI, FormTrek handles the rest.
             </p>
 
             {/* CTA buttons */}
@@ -310,11 +310,10 @@ export function LandingPage() {
             <span className="w-4 h-px bg-blue-400 inline-block" /> Why FormTrek
           </p>
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">
-            Everything multi-step forms need
+            Stop duct-taping three libraries together
           </h2>
           <p className="text-zinc-500 mt-3 max-w-lg mx-auto">
-            One hook handles state, navigation, branching, validation, and persistence.
-            You stay focused on the UI.
+            Multi-step forms have a lot of moving parts. FormTrek handles the tedious ones.
           </p>
         </div>
 
@@ -345,22 +344,21 @@ export function LandingPage() {
                 <span className="w-4 h-px bg-blue-500 inline-block" /> The API
               </p>
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-5">
-                One hook.<br />Everything included.
+                One hook.<br />That's the whole API.
               </h2>
               <p className="text-zinc-400 leading-relaxed mb-8">
-                Call <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">useTrek()</code> once per form.
-                Pass your step definitions — plain objects with Zod schemas and optional conditions.
-                Get back <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">state</code>,{' '}
-                <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">actions</code>, and{' '}
-                <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">currentStep</code>.
+                Call <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">useTrek()</code> once, pass in your steps,
+                and you're done. You get back <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">state</code> to
+                read from, <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">actions</code> to call, and{' '}
+                <code className="text-blue-400 font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded">currentStep</code> to branch on.
               </p>
 
               <ul className="space-y-3">
                 {[
-                  { label: 'Conditions re-evaluate on every value change', sub: 'Synchronous, pure, zero config' },
-                  { label: 'Validation runs on next() automatically', sub: 'Async Zod schemas supported' },
-                  { label: 'Persistence hydrates on mount', sub: 'Swap adapters with one line change' },
-                  { label: 'onComplete receives all accumulated values', sub: 'Works with any async submit handler' },
+                  { label: 'Step conditions update as values change', sub: 'Synchronous, no side effects' },
+                  { label: 'Validation runs when you call next()', sub: 'Async Zod schemas work out of the box' },
+                  { label: 'Saved state loads in on mount', sub: 'Swap adapters by changing one line' },
+                  { label: 'onComplete gets everything at once', sub: 'Hook it up to any async submit handler' },
                 ].map(item => (
                   <li key={item.label} className="flex items-start gap-3">
                     <span className="w-5 h-5 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center shrink-0 mt-0.5">
@@ -418,7 +416,7 @@ export function LandingPage() {
           <p className="text-sm font-semibold text-blue-600 uppercase tracking-widest mb-3 flex items-center justify-center gap-1.5">
             <span className="w-4 h-px bg-blue-400 inline-block" /> Quick start
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">Up and running in minutes</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">Five minutes to a working form</h2>
         </div>
 
         <div className="relative max-w-2xl mx-auto">
@@ -429,22 +427,22 @@ export function LandingPage() {
             {
               n: 1,
               label: 'Install',
-              desc: <>Run <code className="font-mono text-sm bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-700">pnpm dlx formtrek init</code> — the CLI detects your package manager and installs everything automatically.</>,
+              desc: <>Run <code className="font-mono text-sm bg-zinc-100 px-1.5 py-0.5 rounded text-zinc-700">pnpm dlx formtrek init</code> and the CLI figures out your package manager. It installs everything.</>,
             },
             {
               n: 2,
               label: 'Define your steps',
-              desc: 'Create an array of step definitions, each with an id, schema, and optional condition. Steps are plain objects — no class instances, no decorators.',
+              desc: "An array of plain objects. Give each one an id, a Zod schema, and optionally a condition. That's it.",
             },
             {
               n: 3,
               label: 'Call useTrek()',
-              desc: 'Pass your steps to useTrek. Use state and actions to wire up your inputs, navigation buttons, and submit handler.',
+              desc: "Pass your steps to useTrek. You get back state, actions, and currentStep. Wire those up to your inputs and buttons.",
             },
             {
               n: 4,
               label: 'Ship it',
-              desc: 'Add persistence to let users resume later, reuse your schemas server-side for double-validation, and add conditions to branch the flow based on any earlier answer.',
+              desc: "Add a persistence adapter so users can close the tab and come back. Reuse your Zod schemas on the server. Add conditions if the flow needs to branch.",
             },
           ].map((step) => (
             <div key={step.n} className="flex gap-6 pb-8 last:pb-0 relative">
@@ -469,10 +467,10 @@ export function LandingPage() {
       >
         <div className="max-w-6xl mx-auto px-6 py-20 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950 mb-4">
-            Ready to build?
+            Give it a try
           </h2>
           <p className="text-zinc-500 mb-8 max-w-md mx-auto">
-            Read the docs for the full API or jump straight into the demo to see conditional branching live.
+            The docs cover the full API. The demo shows conditional branching working live — it's worth a look before you commit.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link
