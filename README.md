@@ -9,7 +9,7 @@ pnpm dlx formtrek init
 ```
 
 ```bash
-npx folio init
+npx formtrek init
 ```
 
 The CLI detects your package manager and installs all required dependencies automatically.
