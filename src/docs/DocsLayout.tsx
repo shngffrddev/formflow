@@ -31,87 +31,91 @@ function useFocusTrap(containerRef: React.RefObject<HTMLElement | null>, active:
 const VERSION = 'v0.2.2'
 const GITHUB = 'https://github.com/shngffrddev/formtrek'
 
+const IS_DOCS_DOMAIN = window.location.hostname === 'docs.formtrek.dev'
+const DOCS_BASE = IS_DOCS_DOMAIN ? '' : '/docs'
+const DEMO_HREF = IS_DOCS_DOMAIN ? 'https://formtrek.dev/demo' : '/demo'
+
 const NAV = [
   {
     label: 'Getting Started',
     items: [
-      { to: '/docs/introduction', label: 'Introduction' },
-      { to: '/docs/getting-started', label: 'Quick Start' },
+      { to: `${DOCS_BASE}/introduction`, label: 'Introduction' },
+      { to: `${DOCS_BASE}/getting-started`, label: 'Quick Start' },
     ],
   },
   {
     label: 'Core Concepts',
     items: [
-      { to: '/docs/conditional-branching', label: 'Conditional Branching' },
-      { to: '/docs/validation', label: 'Validation' },
-      { to: '/docs/persistence', label: 'Persistence' },
+      { to: `${DOCS_BASE}/conditional-branching`, label: 'Conditional Branching' },
+      { to: `${DOCS_BASE}/validation`, label: 'Validation' },
+      { to: `${DOCS_BASE}/persistence`, label: 'Persistence' },
     ],
   },
   {
     label: 'API',
     items: [
-      { to: '/docs/api', label: 'API Reference' },
+      { to: `${DOCS_BASE}/api`, label: 'API Reference' },
     ],
   },
 ]
 
 const BREADCRUMB_LABELS: Record<string, string> = {
-  '/docs/introduction': 'Introduction',
-  '/docs/getting-started': 'Quick Start',
-  '/docs/conditional-branching': 'Conditional Branching',
-  '/docs/validation': 'Validation',
-  '/docs/persistence': 'Persistence',
-  '/docs/api': 'API Reference',
+  [`${DOCS_BASE}/introduction`]: 'Introduction',
+  [`${DOCS_BASE}/getting-started`]: 'Quick Start',
+  [`${DOCS_BASE}/conditional-branching`]: 'Conditional Branching',
+  [`${DOCS_BASE}/validation`]: 'Validation',
+  [`${DOCS_BASE}/persistence`]: 'Persistence',
+  [`${DOCS_BASE}/api`]: 'API Reference',
 }
 
 const SECTION_LABELS: Record<string, string> = {
-  '/docs/introduction': 'Getting Started',
-  '/docs/getting-started': 'Getting Started',
-  '/docs/conditional-branching': 'Core Concepts',
-  '/docs/validation': 'Core Concepts',
-  '/docs/persistence': 'Core Concepts',
-  '/docs/api': 'API',
+  [`${DOCS_BASE}/introduction`]: 'Getting Started',
+  [`${DOCS_BASE}/getting-started`]: 'Getting Started',
+  [`${DOCS_BASE}/conditional-branching`]: 'Core Concepts',
+  [`${DOCS_BASE}/validation`]: 'Core Concepts',
+  [`${DOCS_BASE}/persistence`]: 'Core Concepts',
+  [`${DOCS_BASE}/api`]: 'API',
 }
 
 const SEARCH_INDEX = [
-  { label: 'Introduction', path: '/docs/introduction', context: 'Getting Started' },
-  { label: 'Quick Start', path: '/docs/getting-started', context: 'Getting Started' },
-  { label: 'Conditional Branching', path: '/docs/conditional-branching', context: 'Core Concepts' },
-  { label: 'Validation', path: '/docs/validation', context: 'Core Concepts' },
-  { label: 'Persistence', path: '/docs/persistence', context: 'Core Concepts' },
-  { label: 'API Reference', path: '/docs/api', context: 'API' },
-  { label: 'Why FormTrek?', path: '/docs/introduction#why-formflow', context: 'Introduction' },
-  { label: 'Core concepts', path: '/docs/introduction#core-concepts', context: 'Introduction' },
-  { label: 'What FormTrek is not', path: '/docs/introduction#what-formflow-is-not', context: 'Introduction' },
-  { label: 'Quick look', path: '/docs/introduction#quick-look', context: 'Introduction' },
-  { label: 'Installation', path: '/docs/getting-started#installation', context: 'Getting Started' },
-  { label: 'Your first form', path: '/docs/getting-started#your-first-form', context: 'Getting Started' },
-  { label: 'Full example', path: '/docs/getting-started#full-example', context: 'Getting Started' },
-  { label: 'Next steps', path: '/docs/getting-started#next-steps', context: 'Getting Started' },
-  { label: 'How conditions work', path: '/docs/conditional-branching#how-it-works', context: 'Conditional Branching' },
-  { label: 'Simple conditions', path: '/docs/conditional-branching#simple-conditions', context: 'Conditional Branching' },
-  { label: 'Compound conditions', path: '/docs/conditional-branching#compound-conditions', context: 'Conditional Branching' },
-  { label: 'Step ordering', path: '/docs/conditional-branching#step-ordering', context: 'Conditional Branching' },
-  { label: 'Accessing active steps', path: '/docs/conditional-branching#accessing-active-steps', context: 'Conditional Branching' },
-  { label: 'Attaching a schema', path: '/docs/validation#attaching-a-schema', context: 'Validation' },
-  { label: 'Accessing errors', path: '/docs/validation#accessing-errors', context: 'Validation' },
-  { label: 'Skipping validation', path: '/docs/validation#skipping-validation', context: 'Validation' },
-  { label: 'Cross-field validation', path: '/docs/validation#cross-field-validation', context: 'Validation' },
-  { label: 'Async validation', path: '/docs/validation#async-validation', context: 'Validation' },
-  { label: 'Server-side reuse', path: '/docs/validation#server-side-reuse', context: 'Validation' },
-  { label: 'How persistence works', path: '/docs/persistence#how-it-works', context: 'Persistence' },
-  { label: 'Built-in adapters', path: '/docs/persistence#built-in-adapters', context: 'Persistence' },
-  { label: 'Disabling persistence', path: '/docs/persistence#disabling-persistence', context: 'Persistence' },
-  { label: 'Custom adapters', path: '/docs/persistence#custom-adapters', context: 'Persistence' },
-  { label: 'Resetting saved state', path: '/docs/persistence#resetting-state', context: 'Persistence' },
-  { label: 'useTrek()', path: '/docs/api#use-form-flow', context: 'API Reference' },
-  { label: 'StepDefinition', path: '/docs/api#step-definition', context: 'API Reference' },
-  { label: 'TrekState', path: '/docs/api#form-flow-state', context: 'API Reference' },
-  { label: 'StepState', path: '/docs/api#step-state', context: 'API Reference' },
-  { label: 'TrekActions', path: '/docs/api#form-flow-actions', context: 'API Reference' },
-  { label: 'Condition', path: '/docs/api#condition', context: 'API Reference' },
-  { label: 'PersistenceAdapter', path: '/docs/api#persistence-adapter', context: 'API Reference' },
-  { label: 'All exports', path: '/docs/api#all-exports', context: 'API Reference' },
+  { label: 'Introduction', path: `${DOCS_BASE}/introduction`, context: 'Getting Started' },
+  { label: 'Quick Start', path: `${DOCS_BASE}/getting-started`, context: 'Getting Started' },
+  { label: 'Conditional Branching', path: `${DOCS_BASE}/conditional-branching`, context: 'Core Concepts' },
+  { label: 'Validation', path: `${DOCS_BASE}/validation`, context: 'Core Concepts' },
+  { label: 'Persistence', path: `${DOCS_BASE}/persistence`, context: 'Core Concepts' },
+  { label: 'API Reference', path: `${DOCS_BASE}/api`, context: 'API' },
+  { label: 'Why FormTrek?', path: `${DOCS_BASE}/introduction#why-formflow`, context: 'Introduction' },
+  { label: 'Core concepts', path: `${DOCS_BASE}/introduction#core-concepts`, context: 'Introduction' },
+  { label: 'What FormTrek is not', path: `${DOCS_BASE}/introduction#what-formflow-is-not`, context: 'Introduction' },
+  { label: 'Quick look', path: `${DOCS_BASE}/introduction#quick-look`, context: 'Introduction' },
+  { label: 'Installation', path: `${DOCS_BASE}/getting-started#installation`, context: 'Getting Started' },
+  { label: 'Your first form', path: `${DOCS_BASE}/getting-started#your-first-form`, context: 'Getting Started' },
+  { label: 'Full example', path: `${DOCS_BASE}/getting-started#full-example`, context: 'Getting Started' },
+  { label: 'Next steps', path: `${DOCS_BASE}/getting-started#next-steps`, context: 'Getting Started' },
+  { label: 'How conditions work', path: `${DOCS_BASE}/conditional-branching#how-it-works`, context: 'Conditional Branching' },
+  { label: 'Simple conditions', path: `${DOCS_BASE}/conditional-branching#simple-conditions`, context: 'Conditional Branching' },
+  { label: 'Compound conditions', path: `${DOCS_BASE}/conditional-branching#compound-conditions`, context: 'Conditional Branching' },
+  { label: 'Step ordering', path: `${DOCS_BASE}/conditional-branching#step-ordering`, context: 'Conditional Branching' },
+  { label: 'Accessing active steps', path: `${DOCS_BASE}/conditional-branching#accessing-active-steps`, context: 'Conditional Branching' },
+  { label: 'Attaching a schema', path: `${DOCS_BASE}/validation#attaching-a-schema`, context: 'Validation' },
+  { label: 'Accessing errors', path: `${DOCS_BASE}/validation#accessing-errors`, context: 'Validation' },
+  { label: 'Skipping validation', path: `${DOCS_BASE}/validation#skipping-validation`, context: 'Validation' },
+  { label: 'Cross-field validation', path: `${DOCS_BASE}/validation#cross-field-validation`, context: 'Validation' },
+  { label: 'Async validation', path: `${DOCS_BASE}/validation#async-validation`, context: 'Validation' },
+  { label: 'Server-side reuse', path: `${DOCS_BASE}/validation#server-side-reuse`, context: 'Validation' },
+  { label: 'How persistence works', path: `${DOCS_BASE}/persistence#how-it-works`, context: 'Persistence' },
+  { label: 'Built-in adapters', path: `${DOCS_BASE}/persistence#built-in-adapters`, context: 'Persistence' },
+  { label: 'Disabling persistence', path: `${DOCS_BASE}/persistence#disabling-persistence`, context: 'Persistence' },
+  { label: 'Custom adapters', path: `${DOCS_BASE}/persistence#custom-adapters`, context: 'Persistence' },
+  { label: 'Resetting saved state', path: `${DOCS_BASE}/persistence#resetting-state`, context: 'Persistence' },
+  { label: 'useTrek()', path: `${DOCS_BASE}/api#use-form-flow`, context: 'API Reference' },
+  { label: 'StepDefinition', path: `${DOCS_BASE}/api#step-definition`, context: 'API Reference' },
+  { label: 'TrekState', path: `${DOCS_BASE}/api#form-flow-state`, context: 'API Reference' },
+  { label: 'StepState', path: `${DOCS_BASE}/api#step-state`, context: 'API Reference' },
+  { label: 'TrekActions', path: `${DOCS_BASE}/api#form-flow-actions`, context: 'API Reference' },
+  { label: 'Condition', path: `${DOCS_BASE}/api#condition`, context: 'API Reference' },
+  { label: 'PersistenceAdapter', path: `${DOCS_BASE}/api#persistence-adapter`, context: 'API Reference' },
+  { label: 'All exports', path: `${DOCS_BASE}/api#all-exports`, context: 'API Reference' },
 ]
 
 // ── Search modal ─────────────────────────────────────────────────────────────
@@ -388,15 +392,15 @@ function DocsInner() {
 
           {/* Right nav */}
           <div className="flex items-center gap-1 ml-auto">
-            <Link
-              to="/demo"
+            <a
+              href={DEMO_HREF}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
             >
               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                 <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h1v6H9M14 9h-1v2h1v1h-1v3"/>
               </svg>
               Demo
-            </Link>
+            </a>
             <a
               href={GITHUB}
               target="_blank"
@@ -479,7 +483,7 @@ function DocsInner() {
           {/* Breadcrumb */}
           {breadcrumbPage && (
             <nav className="flex items-center gap-1.5 text-[12px] text-zinc-400 mb-9" aria-label="Breadcrumb">
-              <Link to="/docs" className="hover:text-zinc-600 transition-colors flex items-center">
+              <Link to={DOCS_BASE || '/'} className="hover:text-zinc-600 transition-colors flex items-center">
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                   <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                   <polyline points="9 22 9 12 15 12 15 22"/>
