@@ -103,7 +103,7 @@ async function init() {
   ok(`${missing.join(', ')} installed`)
   br()
   log(`${DIM}Get started:${RESET}`)
-  log(`  ${DIM}https://formtrek.shngffrd.com/docs/getting-started${RESET}`)
+  log(`  ${DIM}https://docs.formtrek.dev/getting-started${RESET}`)
   br()
 }
 
